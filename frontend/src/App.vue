@@ -1,9 +1,10 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view/>
+  <nav id="nav">
+    <router-link to="/">Accueil</router-link>
+    <router-link to="/signup">Inscription</router-link>
+    <router-link to="/login">Connexion</router-link>
+  </nav>
+  <router-view />
 </template>
 
 <style lang="scss">
@@ -12,18 +13,40 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #312c50;
 }
 
 #nav {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
   padding: 30px;
 
+  @media screen and (min-width: 640px) {
+    justify-content: flex-end;
+  }
+
   a {
+    background-color: #fcfcfc;
+    border: 3px solid #eee;
+    border-radius: 15px;
+    color: #312c50;
     font-weight: bold;
-    color: #2c3e50;
+    margin: 5px;
+    min-width: 100px;
+    padding: 10px;
+    text-decoration: none;
+    transition: all 200ms ease-out;
+
+    &:hover {
+      background-color: #fff;
+      border: 3px solid #ddd;
+      color: #000;
+    }
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: #ad1f01;
+      background-color: #fff7f5;
     }
   }
 }
