@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const http = require("http");  // import Node HTTP package
 const app = require("./app");  // import application
 
