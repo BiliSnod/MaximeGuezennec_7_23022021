@@ -15,8 +15,8 @@ const sequelize = new Sequelize(databaseConfig.database, databaseConfig.username
 });
 
 const database = {};
-database.Sequelize = Sequelize;
-database.sequelize = sequelize;
+database.Sequelize = Sequelize;  // Sequelize library
+database.sequelize = sequelize;  // instance of Sequelize
 
 // database.users = require("./user.js")(sequelize, Sequelize);
 database.notes = require("./note.js")(sequelize, Sequelize);
