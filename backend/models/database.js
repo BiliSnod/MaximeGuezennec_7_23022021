@@ -1,4 +1,3 @@
-
 const Sequelize = require("sequelize");  // importing "Sequelize" module to interact with database
 
 const databaseConfig = require("../config/database.js");  // getting data from configuration file
@@ -19,12 +18,28 @@ database.Sequelize = Sequelize;  // Sequelize library
 database.sequelize = sequelize;  // instance of Sequelize
 
 // database.users = require("./user.js")(sequelize, Sequelize);
-database.notes = require("./note.js")(sequelize, Sequelize);
 database.comments = require("./comment.js")(sequelize, Sequelize);
+database.notes = require("./note.js")(sequelize, Sequelize);
+database.roles = require("./role.js")(sequelize, Sequelize);
+database.users = require("./user.js")(sequelize, Sequelize);
 
 database.notes.hasMany(database.comments, { as: "comments" });  // using "hasMany" method to allow notes to have comments
 database.comments.belongsTo(database.notes, {  // using "belongsTo" method to link a comment with a unique note
     foreignKey: "noteId"
 });
+
+database.users.belongsToMany(database.roles, {
+    through: "user_roles",
+    foreignKey: "userId",
+    otherKey: "roleId"
+});
+
+database.roles.belongsToMany(database.users, {
+    through: "user_roles",
+    foreignKey: "roleId",
+    otherKey: "userId"
+});
+
+database.ROLES = ["user", "admin"];
 
 module.exports = database;  // exporting the model

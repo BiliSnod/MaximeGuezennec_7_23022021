@@ -1,7 +1,7 @@
 const express = require("express");  // importing Express
-// const mysql = require('mysql2');  // importing "mysql2" package for database connexion
 
-// const userRoutes = require("./routes/user");  // importing user routes
+const authRoutes = require("./routes/auth");  // importing user routes
+const userRoutes = require("./routes/user");  // importing user routes
 const noteRoutes = require("./routes/note");  // importing note routes
 
 
@@ -19,16 +19,34 @@ app.use(express.json());  // middleware to transform request's body to JSON
 
 
 const database = require("./models/database");
-database.sequelize.sync();  // delete if dropping existing table (next line)
-/* ------
+const Role = database.roles;
+
+// database.sequelize.sync();  // delete if dropping existing table (next line)
+/* ------ */
 // drop the table if it already exists
 database.sequelize.sync({ force: true }).then(() => {
-    console.log("Drop and re-sync db.");
+    console.log("Drop and re-sync database.");
+    initial();
 });
------- */
+/* ------ */
 
-// app.use("/api/auth", userRoutes);  // importing router for user authentification
+
+app.use("/api/auth", authRoutes);  // importing router for authentication
+app.use("/api/user", userRoutes);  // importing router for user
 app.use("/api/notes", noteRoutes);  // importing router for notes
+
+
+function initial() {
+    Role.create({
+        id: 1,
+        level: "user"
+    });
+   
+    Role.create({
+        id: 2,
+        level: "admin"
+    });
+}
 
 
 module.exports = app;  // exporting application
