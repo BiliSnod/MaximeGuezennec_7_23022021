@@ -5,10 +5,9 @@ module.exports = {
     database: process.env.DB_NAME,
     dialect: "mysql",
     pool: {
-      max: 4,
-      min: 0,
-      acquire: 20000,
-      idle: 10000
+        min: 0,
+        max: 4,
+        acquire: 20000,
+        idle: 10000
     }
-  };
-  
+};

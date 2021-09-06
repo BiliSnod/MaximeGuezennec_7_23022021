@@ -7,8 +7,8 @@ const sequelize = new Sequelize(databaseConfig.database, databaseConfig.username
     host: databaseConfig.host,
     dialect: databaseConfig.dialect,
     pool: {  // configuration of connections in pool
-        max: databaseConfig.pool.max,
         min: databaseConfig.pool.min,
+        max: databaseConfig.pool.max,
         acquire: databaseConfig.pool.acquire,
         idle: databaseConfig.pool.idle
     }
@@ -20,5 +20,11 @@ database.sequelize = sequelize;  // instance of Sequelize
 
 // database.users = require("./user.js")(sequelize, Sequelize);
 database.notes = require("./note.js")(sequelize, Sequelize);
+database.comments = require("./comment.js")(sequelize, Sequelize);
+
+database.notes.hasMany(database.comments, { as: "comments" });  // using "hasMany" method to allow notes to have comments
+database.comments.belongsTo(database.notes, {  // using "belongsTo" method to link a comment with a unique note
+    foreignKey: "noteId"
+});
 
 module.exports = database;  // exporting the model

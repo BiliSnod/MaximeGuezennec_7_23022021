@@ -7,14 +7,16 @@ const noteCtrl = require("../controllers/note");  // calling the controllers for
 
 
 /* --- routes for each functionality [o] --- */
-router.post("/", /*auth, multer,*/ noteCtrl.create);
-// router.post("/comment", /*auth,*/ noteCtrl.createComment);
-router.put("/:id", /*auth, multer,*/ noteCtrl.update);
-// router.put("/comment/:id", /*auth,*/ noteCtrl.modifyComment);
-router.delete("/:id", /*auth,*/ noteCtrl.delete);
-// router.delete("/comment/:id", /*auth,*/ noteCtrl.deleteComment);
-router.get("/:id", /*auth,*/ noteCtrl.findOne);
-router.get("/", /*auth,*/ noteCtrl.findAll);
+router.post("/", /*auth, multer,*/ noteCtrl.createNote);
+router.post("/:noteId/comments", /*auth,*/ noteCtrl.createComment);
+router.put("/:noteId", /*auth, multer,*/ noteCtrl.updateNote);
+router.put("/:noteId/comments/:commentId", /*auth,*/ noteCtrl.updateComment);
+router.delete("/:noteId", /*auth,*/ noteCtrl.deleteNote);
+router.delete("/:noteId/comments/:commentId", /*auth,*/ noteCtrl.deleteComment);
+router.get("/:noteId", /*auth,*/ noteCtrl.findOneNote);
+router.get("/:noteId/comments", /*auth,*/ noteCtrl.findOneNoteWithComments);
+router.get("/:noteId/comments/:commentId", /*auth,*/ noteCtrl.findOneComment);
+router.get("/", /*auth,*/ noteCtrl.findAllNotes);
 /* --- routes for each functionality [x] --- */
 
 
