@@ -25,12 +25,12 @@ router.get("/", /*verifyToken,*/ noteCtrl.findAllNotes);
 router.post("/", verifyToken, /multer,/ noteCtrl.createNote);
 router.post("/:noteId/comments", verifyToken, noteCtrl.createComment);
 router.put("/:noteId", verifyToken, /multer,/ noteCtrl.updateNote);
-router.put("/:noteId/comments/:commentId", verifyToken, noteCtrl.updateComment);
+router.put("/comments/:commentId", verifyToken, noteCtrl.updateComment);
 router.delete("/:noteId", verifyToken, noteCtrl.deleteNote);
 router.delete("/:noteId/comments/:commentId", verifyToken, noteCtrl.deleteComment);
 router.get("/:noteId", verifyToken, noteCtrl.findOneNote);
 router.get("/:noteId/comments", verifyToken, noteCtrl.findOneNoteWithComments);
-router.get("/:noteId/comments/:commentId", verifyToken, noteCtrl.findOneComment);
+router.get("/comments/:commentId", verifyToken, noteCtrl.findOneComment);
 router.get("/", verifyToken, noteCtrl.findAllNotes);
 / --- routes for each functionality [x] --- */
 

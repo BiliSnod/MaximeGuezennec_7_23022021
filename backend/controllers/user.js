@@ -24,19 +24,25 @@ exports.signup = (req, res) => {
         if (req.body.roles) {  // searching if the user can get an "admin" role
             Role.findAll({ where: { level: { [Op.or]: req.body.roles } } })
             .then(roles => {
-                user.setRoles(roles).then(() => {  // setting the ID "2" in "roles" database table
-                    res.send({ message: "Utilisateur enregistré !" }); 
+
+                user.setRoles(roles)
+                .then(() => {  // setting the ID "2" in "roles" database table
+                    res.status(200).send({ message: "Utilisateur enregistré !" }); 
                 });
+
             });
         } else {  // giving the "user" role if it can't
-            user.setRoles([1]).then(() => {  // setting the ID "1" in "roles" database table
-                res.send({ message: "Utilisateur enregistré !" });
+            user.setRoles([1])
+            .then(() => {  // setting the ID "1" in "roles" database table
+                res.status(200).send({ message: "Utilisateur enregistré !" });
             });
         }
+        
     })
     .catch(err => {
         res.status(500).send({ message: err.message });
     });
+
 };
 /* --- Controller to create a new User account [x] --- */
 
@@ -63,7 +69,8 @@ exports.login = (req, res) => {
                 let token = jwt.sign({ id: user.id }, config.secret, { expiresIn: "24h" });  // creating a connection token with JSON Web Token for 24 hours
     
                 let rank = [];
-                user.getRoles().then(roles => {
+                user.getRoles()
+                .then(roles => {
     
                     for (let i = 0; i < roles.length; i++) {  // defining the role for the user in the response
                         rank.push("ROLE_" + roles[i].level.toUpperCase());
@@ -100,11 +107,13 @@ exports.deleteUser = (req, res) => {
 
     User.destroy({ where: { id: id } })  // using "destroy" method to delete identified user
     .then(num => {
+
         if (num == 1) {
         res.send({ message: "Le compte a été supprimé." });
         } else {
         res.status(400).send({ message: "La compte n'a pas pu être supprimé." });
         }
+
     })
     .catch(err => {
         res.status(500).send({ message: "La compte n'a pas pu être supprimé." });
@@ -121,7 +130,13 @@ exports.findOneUser = (req, res) => {
   
     User.findByPk(id)  // using "findByPk" method to display data of the identified user (by its database primary key)
     .then(data => {
-        res.send(data);
+
+        if(!data) {
+            res.status(404).send({ message: "Le compte n'a pas été trouvé." });
+        } else {
+            res.status(200).send(data);
+        }
+
     })
     .catch(err => {
         res.status(500).send({ message: "Impossible d'accéder au compte." });
@@ -139,10 +154,16 @@ exports.findAllUsers = (req, res) => {
   
     User.findAll({ where: condition })
     .then(data => {
-        res.send(data);
+
+        if(!data) {
+            res.status(404).send({ message: "Aucun compte n'a pu être trouvé." });
+        } else {
+            res.send(data);
+        }
+        
     })
     .catch(err => {
-        res.status(500).send({ message: err.message || "Impossible d'accéder à la liste des utilisateurs." });
+        res.status(500).send({ message: "Impossible d'accéder à la liste des utilisateurs." });
     });
 
 };

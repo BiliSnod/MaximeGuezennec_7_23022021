@@ -42,7 +42,9 @@ exports.createNote = (req, res) => {
     
     Note.create(note)  // using "create" method to send model to database
     .then(data => {
-        res.send(data);
+
+        res.status(200).send(data);
+
     })
     .catch(err => {
         res.status(500).send({ message: "La note n'a pas pu être créée." });
@@ -68,7 +70,9 @@ exports.createComment = (req, res) => {
 
     Comment.create(comment)
     .then(data => {
-        res.send(data);
+
+        res.status(200).send(data);
+
     })
     .catch((err) => {
         res.status(500).send({ message: "Le commentaire n'a pas pu être envoyé." });
@@ -85,11 +89,13 @@ exports.updateNote = (req, res) => {
 
     Note.update(req.body, { where: { id: id } })  // using "update" method to modify note content with request body
     .then(num => {
+
         if (num == 1) {  // promise have to return "1"
             res.send({ message: "La note a été modifiée." });
         } else {
             res.status(400).send({ message: "La note n'a pas pu être modifiée." });
         }
+
     })
     .catch(err => {
         res.status(500).send({ message: "La note n'a pas pu être modifiée." });
@@ -106,11 +112,13 @@ exports.updateComment = (req, res) => {
 
     Comment.update(req.body, { where: { id: id } })  // using "update" method to modify comment content with request body
     .then(num => {
+
         if (num == 1) {  // promise have to return "1"
-            res.send({ message: "La commentaire a été modifié." });
+            res.status(200).send({ message: "La commentaire a été modifié." });
         } else {
             res.status(400).send({ message: "Le commentaire n'a pas pu être modifiée." });
         }
+
     })
     .catch(err => {
         res.status(500).send({ message: "La commentaire n'a pas pu être modifiée." });
@@ -127,11 +135,13 @@ exports.deleteNote = (req, res) => {
 
     Note.destroy({ where: { id: id } })  // using "destroy" method to delete identified note
     .then(num => {
+
         if (num == 1) {  // TODO promise have to return "1"
-        res.send({ message: "La note a été supprimée." });
+        res.status(200).send({ message: "La note a été supprimée." });
         } else {
         res.status(400).send({ message: "La note n'a pas pu être supprimée." });
         }
+
     })
     .catch(err => {
         res.status(500).send({ message: "La note n'a pas pu être supprimée." });
@@ -148,11 +158,13 @@ exports.deleteComment = (req, res) => {
 
     Comment.destroy({ where: { id: id } })  // using "destroy" method to delete identified note
     .then(num => {
+
         if (num == 1) {  // promise have to return "1"
-        res.send({ message: "Le commentaire a été supprimé." });
+        res.status(200).send({ message: "Le commentaire a été supprimé." });
         } else {
         res.status(400).send({ message: "Le commentaire n'a pas pu être supprimé." });
         }
+
     })
     .catch(err => {
         res.status(500).send({ message: "Le commentaire n'a pas pu être supprimé." });
@@ -169,7 +181,13 @@ exports.findOneNote = (req, res) => {
   
     Note.findByPk(id)  // using "findByPk" method to display data of the identified note (by its database primary key)
     .then(data => {
-        res.send(data);
+
+        if(!data) {
+            res.status(404).send({ message: "La note n'a pas été trouvée." });
+        } else {
+            res.status(200).send(data);
+        }
+
     })
     .catch(err => {
         res.status(500).send({ message: "Impossible de récupérer la note." });
@@ -185,10 +203,16 @@ exports.findOneNoteWithComments = (req, res) => {
     
     Note.findByPk(noteId, { include: ["comments"] })
     .then((note) => {
-        res.send(note);
+        
+        if(!note) {
+            res.status(404).send({ message: "La note n'a pas été trouvée." });
+        } else {
+            res.status(200).send(note);
+        }  
+
     })
     .catch((err) => {
-        res.status(500).send({ message: err.message || "Impossible de récupérer la note." });
+        res.status(500).send({ message: "Impossible de récupérer la note." });
     });
 
 };
@@ -204,10 +228,16 @@ exports.findOneComment = (req, res) => {
     if ( Note.findByPk(noteId, { include: ["comments"]}) ) {  // TODO checking if the note exists  
         Comment.findByPk(commentId)  // using "findByPk" method to display data of the identified note (by its database primary key)
         .then(data => {
-            res.send(data);
+
+            if(!data) {
+                res.status(404).send({ message: "Le commentaire n'a pas été trouvé." });
+            } else {
+                res.status(200).send(data);
+            }
+            
         })
         .catch(err => {
-            res.status(500).send({ message: err.message || "Impossible de récupérer la note." });
+            res.status(500).send({ message: "Impossible de récupérer la note." });
         });
     } else {        
         res.status(400).send({ message: "Cette note n'existe pas." });
@@ -230,10 +260,11 @@ exports.findAllNotes = (req, res) => {
     .then(data => {
 
         const response = getPageData(data, page, limit);  // defining then sending response
-        res.send(response);
+        res.status(200).send(response);
+
     })
     .catch(err => {
-        res.status(500).send({ message: err.message || "Impossible de récupérer les notes." });
+        res.status(500).send({ message: "Impossible de récupérer les notes." });
     });
 
 };
