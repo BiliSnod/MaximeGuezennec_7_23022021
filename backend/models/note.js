@@ -7,11 +7,11 @@ module.exports = (sequelize, DataTypes) => {
         content: {
             type: DataTypes.STRING
         }/*,
-        author: {
-            type: Sequelize.STRING
-        },
         mediaUrl: {
-            type: Sequelize.STRING
+            type: DataTypes.STRING
+        },
+        mediaType: {
+            type: DataTypes.STRING
         }*/
     });
 

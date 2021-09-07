@@ -1,48 +1,57 @@
+const jwt = require("jsonwebtoken");  // importing "jsonwebtoken" package
+const config = require("../config/auth");
 const database = require("../models/database");
-
-const ROLES = database.ROLES;
-const User = database.users;
+// const User = database.users;
 
 
-verifyEmail = (req, res, next) => {
+verifyToken = (req, res, next) => {
 
-    User.findOne({ where: { email: req.body.email } })
-    .then(user => {
+    let token = req.headers["x-access-token"];
 
-        if (user) {
-            res.status(400).send({ message: "Cette adresse e-mail est déjà utilisée." });
-            return;
+    if (!token) {
+        return res.status(403).send({ message: "Pas de token envoyé." });
+    }
+
+    jwt.verify(token, config.secret, (err, decoded) => {
+        
+        if (err) {
+            return res.status(401).send({ message: "Accès refusé." });
         }
-
+        
+        req.userId = decoded.id;
         next();
 
     });
-
-};
-
-
-verifyRole = (req, res, next) => {
-    
-    if (req.body.roles) {
-        for (let i = 0; i < req.body.roles.length; i++) {
-            if (!ROLES.includes(req.body.roles[i])) {
-                res.status(400).send({ message: "Ce rôle n'existe pas : " + req.body.roles[i] });
-                return;
-            }
-        }
-    }
-    
-    next();
-
 };
 
 /*
-const validateSignup = {
-    verifyEmail: verifyEmail,
-    verifyRole: verifyRole
+isAdmin = (req, res, next) => {
+
+    User.findByPk(req.userId)
+    .then(user => {
+        user.getRoles().then(roles => {
+
+            for (let i = 0; i < roles.length; i++) {
+
+                if (roles[i].name === "admin") {
+                    next();
+                    return;
+                }
+
+            }
+
+            res.status(403).send({ message: "Réservé à l'administrateur." });
+            return;
+
+        });
+    });
 };
-console.log(validateSignup)
+
+
+const auth = {
+    verifyToken: verifyToken,
+    isAdmin: isAdmin,
+};
 */
 
-module.exports = verifyEmail;
-// module.exports = verifyRole;
+module.exports = verifyToken;

@@ -1,6 +1,8 @@
 const database = require("../models/database");  // importing database model
+
 const Note = database.notes;  // importing model for notes
 const Comment = database.comments;  // importing model for comments
+
 const Op = database.Sequelize.Op;  // calling Sequelize operators
 
 
@@ -34,8 +36,8 @@ exports.createNote = (req, res) => {
 
     const note = {  // getting data from query to fill the Note model
         title: req.body.title,
-        content: req.body.content //,
-        //author: req.body.author,
+        content: req.body.content,
+        userId: req.body.userId
     };
     
     Note.create(note)  // using "create" method to send model to database

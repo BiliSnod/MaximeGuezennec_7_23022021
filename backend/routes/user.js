@@ -1,21 +1,15 @@
-const authJwt = require("../middlewares");
-const controller = require("../controllers/user");
+const express = require("express");  // importing Express
+const router = express.Router();  // using "Router" function of Express to create new router object
 
-module.exports = function(app) {
+const userCtrl = require("../controllers/user");  // calling the controllers for users
 
-    app.use(function(req, res, next) {
-        res.header(
-        "Access-Control-Allow-Headers",
-        "x-access-token, Origin, Content-Type, Accept"
-        );
+const verifyEmail = require("../middlewares/user");  // importing middleware to verify if email address already exists
 
-        next();
 
-    });
+/* --- routes for each functionality [o] --- */
+router.post("/signup", verifyEmail, userCtrl.signup);
+router.post("/login", userCtrl.login);
+/* --- routes for each functionality [x] --- */
 
-    app.get("/api/test/all", controller.allAccess);
 
-    app.get("/api/test/user", [authJwt.verifyToken], controller.userBoard);
-
-    app.get("/api/test/admin", [authJwt.verifyToken, authJwt.isAdmin], controller.adminBoard);
-};
+module.exports = router;  // exporting router to other files
