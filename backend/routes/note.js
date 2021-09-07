@@ -7,18 +7,18 @@ const verifyToken = require("../middlewares/auth");  // calling the authenticati
 // const multer = require("../middlewares/multer");  // calling the "multer" middleware for file upload
 
 
-/* --- routes for each functionality [o] --- */
+/* --- Routes for each functionality [o] --- */
 router.post("/", /*verifyToken, multer,*/ noteCtrl.createNote);
 router.post("/:noteId/comments", /*verifyToken,*/ noteCtrl.createComment);
 router.put("/:noteId", /*verifyToken,*/ /*multer,*/ noteCtrl.updateNote);
-router.put("/:noteId/comments/:commentId", /*verifyToken,*/ noteCtrl.updateComment);
+router.put("/comments/:commentId", /*verifyToken,*/ noteCtrl.updateComment);
 router.delete("/:noteId", /*verifyToken,*/ noteCtrl.deleteNote);
 router.delete("/:noteId/comments/:commentId", /*verifyToken,*/ noteCtrl.deleteComment);
 router.get("/:noteId", /*verifyToken,*/ noteCtrl.findOneNote);
 router.get("/:noteId/comments", /*verifyToken,*/ noteCtrl.findOneNoteWithComments);
 router.get("/comments/:commentId", /*verifyToken,*/ noteCtrl.findOneComment);
 router.get("/", /*verifyToken,*/ noteCtrl.findAllNotes);
-/* --- routes for each functionality [x] --- */
+/* --- Routes for each functionality [x] --- */
 
 
 /* --- routes for each functionality [o] --- /

@@ -6,10 +6,13 @@ const userCtrl = require("../controllers/user");  // calling the controllers for
 const verifyEmail = require("../middlewares/user");  // importing middleware to verify if email address already exists
 
 
-/* --- routes for each functionality [o] --- */
+/* --- Routes for each functionality [o] --- */
 router.post("/signup", verifyEmail, userCtrl.signup);
 router.post("/login", userCtrl.login);
-/* --- routes for each functionality [x] --- */
+router.delete("/users/:userId", userCtrl.deleteUser);
+router.get("/users/:userId", userCtrl.findOneUser);
+router.get("/users", userCtrl.findAllUsers);
+/* --- Routes for each functionality [x] --- */
 
 
 module.exports = router;  // exporting router to other files

@@ -88,11 +88,11 @@ exports.updateNote = (req, res) => {
         if (num == 1) {  // promise have to return "1"
             res.send({ message: "La note a été modifiée." });
         } else {
-            res.status(400).send({ message: "La note n'a pa pu être modifiée." });
+            res.status(400).send({ message: "La note n'a pas pu être modifiée." });
         }
     })
     .catch(err => {
-        res.status(500).send({ message: "La note n'a pa pu être modifiée." });
+        res.status(500).send({ message: "La note n'a pas pu être modifiée." });
     });
 
 };
@@ -113,7 +113,7 @@ exports.updateComment = (req, res) => {
         }
     })
     .catch(err => {
-        res.status(500).send({ message: "La commentaire n'a pa pu être modifiée." });
+        res.status(500).send({ message: "La commentaire n'a pas pu être modifiée." });
     });
 
 };
@@ -130,11 +130,11 @@ exports.deleteNote = (req, res) => {
         if (num == 1) {  // TODO promise have to return "1"
         res.send({ message: "La note a été supprimée." });
         } else {
-        res.status(400).send({ message: "La note n'a pa pu être supprimée." });
+        res.status(400).send({ message: "La note n'a pas pu être supprimée." });
         }
     })
     .catch(err => {
-        res.status(500).send({ message: "La note n'a pa pu être supprimée." });
+        res.status(500).send({ message: "La note n'a pas pu être supprimée." });
     });
 
 };
