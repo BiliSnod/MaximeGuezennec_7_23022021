@@ -20,9 +20,9 @@ app.use(express.json());  // middleware to transform request's body to JSON
 const database = require("./models/database");
 const Role = database.roles;
 
-// database.sequelize.sync();  // delete if reinitializing database (next function)
+database.sequelize.sync();  // delete if reinitializing database (next function)
 
-/* --- Reinitialize database for testing [o] --- */
+/* --- Reinitialize database for testing [o] --- /
 database.sequelize.sync({ force: true }).then(() => {
     console.log("Reinitialize database.");
     initial();
@@ -39,7 +39,7 @@ function initial() {
         level: "admin"
     });
 }
-/* --- Reinitialize database for testing [x] --- */
+/ --- Reinitialize database for testing [x] --- */
 
 
 app.use("/api/auth", authRoutes);  // importing router for authentication
