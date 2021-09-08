@@ -13,7 +13,7 @@ router.post("/:noteId/comments", /*verifyToken,*/ noteCtrl.createComment);
 router.put("/:noteId", /*verifyToken,*/ /*multer,*/ noteCtrl.updateNote);
 router.put("/comments/:commentId", /*verifyToken,*/ noteCtrl.updateComment);
 router.delete("/:noteId", /*verifyToken,*/ noteCtrl.deleteNote);
-router.delete("/:noteId/comments/:commentId", /*verifyToken,*/ noteCtrl.deleteComment);
+router.delete("/comments/:commentId", /*verifyToken,*/ noteCtrl.deleteComment);
 router.get("/:noteId", /*verifyToken,*/ noteCtrl.findOneNote);
 router.get("/:noteId/comments", /*verifyToken,*/ noteCtrl.findOneNoteWithComments);
 router.get("/comments/:commentId", /*verifyToken,*/ noteCtrl.findOneComment);

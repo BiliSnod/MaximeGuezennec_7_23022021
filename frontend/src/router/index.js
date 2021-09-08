@@ -6,34 +6,34 @@ import Home from "../views/Home.vue"
 const routes = [
     {
         path: "/",
-        name: "Accueil",
+        name: "accueil",
         component: Home
     },
     {
         path: "/signup",
-        name: "Inscription",
+        name: "inscription",
         component: () => import(/* webpackChunkName: "signup" */ "../views/Signup.vue")
     },
     {
         path: "/login",
-        name: "Connexion",
+        name: "connexion",
         component: () => import(/* webpackChunkName: "login" */ "../views/Login.vue")
     },
 
     {
         path: "/notes",  // "/",
         // alias: "/notes",
-        name: "Notes",
+        name: "notes",
         component: () => import("../components/AllNotes")
     },
     {
         path: "/notes/:id",
-        name: "Note",
+        name: "note",
         component: () => import("../components/ViewNote")
     },
     {
         path: "/new",
-        name: "Nouvelle note",
+        name: "new-note",
         component: () => import("../components/NewNote")
     }
 
