@@ -41,13 +41,10 @@ export default {
             notes: [],
             currenNote: null,
             currentIndex: -1,
-            searchTitle: "",
             allPages: "",
 
             page: 2,
-            pageSize: 5,
-
-            pageSizes: [5, 10, 15],
+            pageSize: 5
         };
   },
   methods: {

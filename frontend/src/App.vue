@@ -46,6 +46,7 @@ export default {
 
 .side-title {
     width: 100%;
+    z-index: -1;
 
     @media screen and (min-width: 640px) {
         max-width: 50%;
