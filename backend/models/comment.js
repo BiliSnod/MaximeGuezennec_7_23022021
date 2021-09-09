@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING
         },
         message: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING(2040)
         }
     });
 

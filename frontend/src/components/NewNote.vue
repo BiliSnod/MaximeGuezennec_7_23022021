@@ -1,26 +1,37 @@
 <template>
-    <div class="note-submit">
-        <div v-if="!submitted">
-            <div class="note-fields">
-                <div class="note-fields__title">
-                    <label for="title">Titre</label>
-                    <input type="text" id="title" name="title" class="form-control" v-model="note.title" placeholder="Entrez votre titre ici !" required />                
-                </div>
-            
-                <div class="note-fields__content">
-                    <label for="content">Contenu</label>
-                    <textarea id="content" name="content" v-model="note.content" class="form-control" placeholder="Entrez votre texte ici !" required />
-                </div>
-            </div>
-
-            <div class="note-button">
-                <button @click="saveNote" class="note-button__confirm">Envoyez une nouvelle note !</button>                
-            </div>
+    <div>
+        <div class="side-title">
+            <img alt="Vue logo" src="../assets/icon/icon-left-font-monochrome-black.png" />
         </div>
+        <h1 class="main-title">Partagez une nouvelle note</h1>
+        <div class="note-submit">
+            <div v-if="!submitted">
+                <form>
+                    <div class="note-fields">
+                        <div class="note-fields__title">
+                            <label for="title">Titre</label>
+                            <input type="text" id="title" name="title" class="form-control" v-model="note.title" placeholder="Entrez votre titre ici !" required />                
+                        </div>
+                    
+                        <div class="note-fields__content">
+                            <label for="content">Contenu</label>
+                            <textarea id="content" name="content" v-model="note.content" class="form-control" placeholder="Entrez votre texte ici !" required />
+                        </div>
+                    </div>
+                </form>
 
-        <div v-else>
-            <p>La note a bien été envoyée !</p>
-            <button class="btn btn-success" @click="newNote">Add</button>
+                <div class="note-button">
+                    <button @click="saveNote" class="note-button__confirm">Envoyez une nouvelle note !</button>
+                </div>
+            </div>
+
+            <div v-else>
+                <div class="note-button">
+                    <p>La note a bien été envoyée !</p>
+                    <p><router-link :to="'/notes/' + note.id">Afficher la note.</router-link></p>
+                    <button class="btn btn-success" @click="newNote">Envoyez une autre note</button>  <!-- TODO proposer de voir la note avec lien -->
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -49,9 +60,11 @@ export default {
 
             NoteData.create(data)
             .then(response => {
+
                 this.note.id = response.data.id;
                 console.log(response.data);
                 this.submitted = true;
+                
             })
             .catch(e => {
                 console.log(e);
@@ -107,23 +120,23 @@ export default {
 }
 
 .note-button {
+    text-align: center;
+
+    & button {
+        background-color: #e52901;
+        border: none;
+        border-radius: 10px;
+        color: #fff;
+        cursor: pointer;
+        font-size: 1.2em;
+        font-weight: 600;
         margin: 20px;
-        text-align: center;
+        padding: 20px;
+        transition: all 100ms;
 
-        & button {
-            background-color: #e52901;
-            border: none;
-            border-radius: 10px;
-            color: #fff;
-            cursor: pointer;
-            font-size: 1.2em;
-            font-weight: 600;
-            padding: 20px;
-            transition: all 100ms;
-
-            &:hover, &:focus {
-                background-color: #ad1f01;
-            }
+        &:hover, &:focus {
+            background-color: #ad1f01;
         }
     }
+}
 </style>

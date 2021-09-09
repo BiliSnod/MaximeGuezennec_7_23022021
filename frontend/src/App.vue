@@ -9,7 +9,7 @@
             </ul>
             <ul>
                 <li><router-link to="/notes">Notes</router-link></li>
-                <li><router-link to="/new">Postez</router-link></li>
+                <li><router-link to="/new">Partagez</router-link></li>
             </ul>
         </nav>
 
@@ -28,11 +28,42 @@ export default {
 
 <style lang="scss">
 #app {
+    color: #312c50;
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    margin: 0 auto;
+    max-width: 1920px;
     text-align: center;
-    color: #312c50;
+}
+
+.main-title {
+    background-color: #ffd7d7;
+    border-radius: 10px;
+    margin: 20px 36px;
+    padding: 10px;
+}
+
+.side-title {
+    width: 100%;
+
+    @media screen and (min-width: 640px) {
+        max-width: 50%;
+        position: relative;
+        top: -50px;
+    }
+
+    @media screen and (min-width: 1280px) {
+        max-width: 50%;
+        position: relative;
+        top: -100px;
+    }
+
+    & img {
+        height: 100px;
+        object-fit: cover;
+        width: 50%;
+    }
 }
 
 .nav {

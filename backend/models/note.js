@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING
         },
         content: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING(2040)
         }/*,
         mediaUrl: {
             type: DataTypes.STRING
