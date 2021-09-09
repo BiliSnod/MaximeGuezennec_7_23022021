@@ -4,6 +4,12 @@
             <img alt="Vue logo" src="../assets/icon/icon-left-font-monochrome-black.png" />
         </div>
         <h1 class="main-title">Dernières notes envoyées</h1>
+        <div class="page-change">
+            <p class="page-change__text">Changer de page :</p>                
+            <select v-model="page" @change="handlePageNumber($event)" class="page-change__selection">
+                <option v-for="page in allPages" :key="page" :value="page">{{ page }}</option>
+            </select>
+        </div>
         <div class="note-list">
             <div v-for="(note) in notes" :key="note" class="single-note">
                 <h2 class="single-note__title"><router-link :to="'/notes/' + note.id">{{ note.title }}</router-link></h2>
@@ -16,6 +22,12 @@
                 <p class="single-note__view"><router-link :to="'/notes/' + note.id">Voir les commentaires</router-link></p>
             </div>
         </div>
+        <div class="page-change">
+            <p class="page-change__text">Changer de page :</p>                
+            <select v-model="page" @change="handlePageNumber($event)" class="page-change__selection">
+                <option v-for="page in allPages" :key="page" :value="page">{{ page }}</option>
+            </select>
+        </div>
     </div>
 </template>
 
@@ -26,20 +38,61 @@ export default {
   name: "notes",
   data() {
         return {
-            notes: []
+            notes: [],
+            currenNote: null,
+            currentIndex: -1,
+            searchTitle: "",
+            allPages: "",
+
+            page: 2,
+            pageSize: 5,
+
+            pageSizes: [5, 10, 15],
         };
   },
   methods: {
+        getRequestParams(page, pageSize) {
+            let params = {};
+
+            if (page) {
+                params["page"] = page - 1;
+            }
+
+            if (pageSize) {
+                params["size"] = pageSize;
+            }
+
+            return params;
+        },
         retrieveNotes() {
-            NoteData.getAll()
+            const params = this.getRequestParams(
+                this.page,
+                this.pageSize
+            );
+            NoteData.getAll(params)
             .then(response => {
-                this.notes = response.data.notes.reverse();  // taking "notes" array in the object response, and reversing it
-                console.log("Response", response.data);
-                console.log("Response", response.data.notes);
+                const { notes } = response.data;
+                this.notes = notes.reverse();  // taking "notes" array in the object response, and reversing it
+                console.log("Notes data", response.data);
             })
             .catch(e => {
                 console.log(e);
             });
+        },
+        retrievePages() {
+            NoteData.getAll()
+            .then(response => {
+                this.allPages = response.data.allPages;
+                console.log("Pages data", response.data.allPages);
+            })
+            .catch(e => {
+                console.log(e);
+            });
+        },
+        handlePageNumber(event) {
+            this.pageSize = 5;
+            this.page = event.target.value;
+            this.retrieveNotes();
         },
         /*
         retrieveAuthors() {
@@ -61,6 +114,7 @@ export default {
   },
   mounted() {
     this.retrieveNotes();
+    this.retrievePages();
     // this.retrieveUsers();
     // this.displayAuthor();
   }
@@ -68,6 +122,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.page-change {
+    display: flex;
+    font-style: italic;
+    justify-content: center;
+
+    &__text {
+        margin-right: 20px;
+        text-transform: full-width;
+    }
+
+    &__selection {
+        background-color: #e52901;
+        border: none;
+        border-radius: 25px;
+        color: #fff;
+        font-weight: 600;
+        padding: 5px;
+        text-transform: full-width;
+    }
+}
+
 .note-list {
     background-color: #f5f5f5;
     border-radius: 10px;

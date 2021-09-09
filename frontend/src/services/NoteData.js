@@ -42,6 +42,7 @@ class NoteData {
     getAll(params) {
         return http.get("/notes", { params });
     }
+    
 }
 
 export default new NoteData();
