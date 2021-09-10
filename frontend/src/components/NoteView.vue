@@ -43,8 +43,8 @@
 </template>
 
 <script>
-import NoteData from "../services/NoteData";
-import CommentData from "../services/CommentData";
+import DataNote from "../services/DataNote";
+import DataComment from "../services/DataComment";
 
 export default {
     name: "note",
@@ -57,7 +57,7 @@ export default {
     },
     methods: {
         getNote(id) {
-            CommentData.getAll(id)
+            DataComment.getAll(id)
             .then(response => {
 
                 this.actualNote = response.data;
@@ -69,7 +69,7 @@ export default {
             });
         },
         updateNote() {
-            NoteData.update(this.actualNote.id, this.actualNote)
+            DataNote.update(this.actualNote.id, this.actualNote)
             .then(response => {
 
                 console.log(response.data);
@@ -81,7 +81,7 @@ export default {
             });
         },
         deleteNote() {
-            NoteData.delete(this.actualNote.id)
+            DataNote.delete(this.actualNote.id)
             .then(response => {
 
                 console.log(response.data);
@@ -93,7 +93,7 @@ export default {
             });
         },
         retrieveComments(id) {
-            CommentData.getAll(id)
+            DataComment.getAll(id)
             .then(response => {
 
                 this.comments = response.data.comments;

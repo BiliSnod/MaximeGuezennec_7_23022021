@@ -1,40 +1,51 @@
 import { createRouter, createWebHistory } from "vue-router"
-import Home from "../views/Home.vue"
+import Welcome from "../views/Welcome.vue"
+// import PanelAdmin from "../components/PanelAdmin.vue";
+import UserSignup from "../components/UserSignup.vue";
+import UserLogin from "../components/UserLogin.vue";
+import UserProfile from "../components/UserProfile.vue";
+import NotesAll from "../components/NotesAll.vue";
+import NoteView from "../components/NoteView.vue";
+import NoteNew from "../components/NoteNew.vue";
 
 
 /* --- Defining routes for each linked page [o] --- */
 const routes = [
+
     {
         path: "/",
-        name: "accueil",
-        component: Home
+        name: "welcome",
+        component: Welcome,
     },
     {
         path: "/signup",
-        name: "inscription",
-        component: () => import(/* webpackChunkName: "signup" */ "../views/Signup.vue")
+        name: "signup",
+        component: UserSignup,
     },
     {
         path: "/login",
-        name: "connexion",
-        component: () => import(/* webpackChunkName: "login" */ "../views/Login.vue")
+        name: "login",
+        component: UserLogin,
     },
-
     {
-        path: "/notes",  // "/",
-        // alias: "/notes",
+        path: "/profile",
+        name: "profile",
+        component: UserProfile,
+    },
+    {
+        path: "/notes",
         name: "notes",
-        component: () => import("../components/AllNotes")
+        component: NotesAll,
     },
     {
         path: "/notes/:id",
         name: "note",
-        component: () => import("../components/ViewNote")
+        component: NoteView,
     },
     {
         path: "/new",
-        name: "new-note",
-        component: () => import("../components/NewNote")
+        name: "new",
+        component: NoteNew,
     }
 
 ];
@@ -46,4 +57,4 @@ history: createWebHistory(),  // (process.env.BASE_URL),
 routes
 })
 
-export default router
+export default router;

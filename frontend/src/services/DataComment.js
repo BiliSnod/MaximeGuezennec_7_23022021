@@ -1,6 +1,6 @@
 import http from "../http-common";
 
-class CommentData {
+class DataComment {
     
     create(id) {
         return http.post(`/notes/${id}/comments`);
@@ -24,4 +24,4 @@ class CommentData {
     
 }
 
-export default new CommentData();
+export default new DataComment();

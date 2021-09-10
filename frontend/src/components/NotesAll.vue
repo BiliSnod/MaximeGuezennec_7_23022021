@@ -32,11 +32,11 @@
 </template>
 
 <script>
-import NoteData from "../services/NoteData";
+import DataNote from "../services/DataNote";
 
 export default {
-  name: "notes",
-  data() {
+    name: "notes",
+    data() {
         return {
             notes: [],
             currenNote: null,
@@ -46,8 +46,8 @@ export default {
             page: 2,
             pageSize: 5
         };
-  },
-  methods: {
+    },
+    methods: {
         getRequestParams(page, pageSize) {
             let params = {};
 
@@ -66,7 +66,7 @@ export default {
                 this.page,
                 this.pageSize
             );
-            NoteData.getAll(params)
+            DataNote.getAll(params)
             .then(response => {
                 const { notes } = response.data;
                 this.notes = notes.reverse();  // taking "notes" array in the object response, and reversing it
@@ -77,7 +77,7 @@ export default {
             });
         },
         retrievePages() {
-            NoteData.getAll()
+            DataNote.getAll()
             .then(response => {
                 this.allPages = response.data.allPages;
                 console.log("Pages data", response.data.allPages);
@@ -108,13 +108,13 @@ export default {
             return author = this.user.firstname + this.user.lastname;
         }
          */
-  },
-  mounted() {
-    this.retrieveNotes();
-    this.retrievePages();
-    // this.retrieveUsers();
-    // this.displayAuthor();
-  }
+   },
+   mounted() {
+        this.retrieveNotes();
+        this.retrievePages();
+        // this.retrieveUsers();
+        // this.displayAuthor();
+    }
 };
 </script>
 

@@ -38,27 +38,34 @@
 
 
 <script>
-import NoteData from "../services/NoteData";
+import DataNote from "../services/DataNote";
 
 export default {
-    name: "new-note",
+    name: "new",
     data() {
         return {
             note: {
                 title: "",
-                content: ""
+                content: "",
+                userId: ""
             },
             submitted: false
         };
+    },
+    computed: {
+        currentUser() {  // stating if the user is logged in
+            return this.$store.state.auth.user;
+        }
     },
     methods: {
         saveNote() {
             var data = {
                 title: this.note.title,
-                content: this.note.content
+                content: this.note.content,
+                userId: this.currentUser.id
             };
 
-            NoteData.create(data)
+            DataNote.create(data)
             .then(response => {
 
                 this.note.id = response.data.id;
@@ -77,6 +84,7 @@ export default {
     }
 };
 </script>
+
 
 <style lang="scss" scoped>
 .note-submit {

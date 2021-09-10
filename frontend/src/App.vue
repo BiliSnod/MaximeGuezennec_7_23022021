@@ -1,30 +1,52 @@
 <template>
-    <div id="app">
-
-        <nav class="nav">
+    <div>
+        <nav class="main-menu">
             <ul>
                 <li><router-link to="/">Accueil</router-link></li>
-                <li><router-link to="/signup">Inscription</router-link></li>
-                <li><router-link to="/login">Connexion</router-link></li>
-            </ul>
-            <ul>
-                <li><router-link to="/notes">Notes</router-link></li>
-                <li><router-link to="/new">Partagez</router-link></li>
+                <!-- Only show for admin account
+                <li v-if="currentAdmin"><router-link to="/admin">Admin</router-link></li> -->
+                <!-- Only show when user is logged out -->
+                <li v-if="!currentUser"><router-link to="/signup">Inscription</router-link></li>
+                <li v-if="!currentUser"><router-link to="/login">Connexion</router-link></li>
+                <!-- Only show when user logged in -->
+                <li v-if="currentUser"><router-link to="/profile">Profil</router-link></li>
+                <li v-if="currentUser"><router-link to="/notes">Notes</router-link></li>
+                <li v-if="currentUser"><router-link to="/new">Publier</router-link></li>
+                <li v-if="currentUser"><a @click.prevent="logOut">Déconnexion</a></li>
             </ul>
         </nav>
 
+        <!-- Nested content from router -->
         <div>
             <router-view />
         </div>
-
     </div>
 </template>
 
+
 <script>
 export default {
-    name: "app"
+    name: "app",
+    computed: {
+        currentUser() {  // stating if the user is logged in
+            return this.$store.state.auth.user;
+        },
+        currentAdmin() {  // stating if the user got an admin role
+        if (this.currentUser && this.currentUser['roles']) {
+            return this.currentUser['roles'].includes('ROLE_ADMIN');
+        }
+        return false;
+        },
+    },
+    methods: {
+        logOut() {  // disconnecting user function, redirecting to login page
+            this.$store.dispatch('auth/logout');
+            this.$router.push('/login');
+        }
+    }
 };
 </script>
+
 
 <style lang="scss">
 #app {
@@ -67,7 +89,25 @@ export default {
     }
 }
 
-.nav {
+.loggedout-logo {
+  height: 120px;
+  object-fit: cover;
+  width: 100%;
+
+  @media screen and (min-width: 640px) {
+    width: 75%;
+  }
+
+  @media screen and (min-width: 768px) {
+    width: 50%;
+  }
+
+  @media screen and (min-width: 1024px) {
+    max-width: 800px;
+  }
+}
+
+.main-menu {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
@@ -86,6 +126,7 @@ export default {
         border: 3px solid #eee;
         border-radius: 15px;
         color: #312c50;
+        cursor: pointer;
         display: block;
         font-weight: bold;
         margin: 5px;
@@ -94,7 +135,7 @@ export default {
         transition: all 200ms ease-out;
         width: 100px;
 
-        &:hover {
+        &:hover, &:focus {
             background-color: #fff;
             border: 3px solid #ddd;
             color: #000;
@@ -103,6 +144,34 @@ export default {
         &.router-link-exact-active {
             color: #ad1f01;
             background-color: #fff7f5;
+        }
+    }
+}
+
+.default-block {
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    margin: 20px 36px;
+    padding: 20px;
+}
+
+.main-button {
+    text-align: center;
+
+    & button {
+        background-color: #e52901;
+        border: none;
+        border-radius: 10px;
+        color: #fff;
+        cursor: pointer;
+        font-size: 1.2em;
+        font-weight: 600;
+        margin: 20px;
+        padding: 20px;
+        transition: all 100ms;
+
+        &:hover, &:focus {
+            background-color: #ad1f01;
         }
     }
 }

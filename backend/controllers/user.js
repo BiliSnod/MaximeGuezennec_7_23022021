@@ -27,14 +27,14 @@ exports.signup = (req, res) => {
 
                 user.setRoles(roles)
                 .then(() => {  // setting the ID "2" in "roles" database table
-                    res.status(200).send({ message: "Utilisateur enregistré !" }); 
+                    res.status(200).send({ message: "Utilisateur enregistré ! Vous pouvez vous connecter !" }); 
                 });
 
             });
         } else {  // giving the "user" role if it can't
             user.setRoles([1])
             .then(() => {  // setting the ID "1" in "roles" database table
-                res.status(200).send({ message: "Utilisateur enregistré !" });
+                res.status(200).send({ message: "Utilisateur enregistré ! Vous pouvez vous connecter !" });
             });
         }
         
