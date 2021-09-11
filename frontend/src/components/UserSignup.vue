@@ -52,33 +52,17 @@ export default {
     },
     data() {
         const schema = yup.object().shape({
-            firstname: yup
-                .string()
-                .required("Veuillez entrer un prénom !")
-                .min(3, "Minimum 3 caractères")
-                .max(20, "Maximum 20 caractères."),
-            lastname: yup
-                .string()
-                .required("Veuillez entrer un nom !")
-                .min(3, "Minimum 3 caractères.")
-                .max(20, "Maximum 20 caractères"),
-            email: yup
-                .string()
-                .required("Veuillez entrer une adresse e-mail !")
-                .email("Cette adresse e-mail n'est pas valide !")
-                .max(80, "Maximum 80 caractères."),
-            password: yup
-                .string()
-                .required("Veuillez entrer un mot de passe !")
-                .min(8, "Minimum 8 caractères.")
-                .max(40, "Minimum 40 caractères."),
+            firstname: yup.string().required("Veuillez entrer un prénom !").min(3, "Minimum 3 caractères").max(20, "Maximum 20 caractères."),
+            lastname: yup.string().required("Veuillez entrer un nom !").min(3, "Minimum 3 caractères.").max(20, "Maximum 20 caractères"),
+            email: yup.string().required("Veuillez entrer une adresse e-mail !").email("Cette adresse e-mail n'est pas valide !").max(80, "Maximum 80 caractères."),
+            password: yup.string().required("Veuillez entrer un mot de passe !").min(8, "Minimum 8 caractères.").max(40, "Minimum 40 caractères.")
         });
 
         return {
             successful: false,
             loading: false,
             message: "",
-            schema,
+            schema
         };
     },
     computed: {

@@ -5,11 +5,11 @@ class DataComment {
     create(id) {
         return http.post(`/notes/${id}/comments`);
     }
-    
+    /* DISCARDED
     update(id, data) {
         return http.put(`/notes/comments/${id}`, data);
     }
-    
+    */
     delete(id) {
         return http.delete(`/notes/comments/${id}`);
     }

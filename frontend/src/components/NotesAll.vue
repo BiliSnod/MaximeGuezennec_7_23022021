@@ -1,5 +1,6 @@
+<!-- ORIGINAL TEMPLATE WITH PAGINATION
 <template>
-    <div>
+    <section>
         <div class="side-title">
             <img alt="Vue logo" src="../assets/icon/icon-left-font-monochrome-black.png" />
         </div>
@@ -17,7 +18,6 @@
                     <p class="note-about__user">Par {{ note.userId }}.</p>
                     <p class="note-about__date">Le {{ note.createdAt }}.</p>
                 </div>
-                <!--<p>{{ UserData }}</p>-->
                 <p class="single-note__content">{{ note.content }}</p>
                 <p class="single-note__view"><router-link :to="'/notes/' + note.id">Voir les commentaires</router-link></p>
             </div>
@@ -28,14 +28,56 @@
                 <option v-for="page in allPages" :key="page" :value="page">{{ page }}</option>
             </select>
         </div>
-    </div>
+    </section>
 </template>
+-->
+
+<!-- SIMPLIFIED EXEMPLE WITHOUT PAGINATION
+<template>
+    <section class="notes">
+        <h1>Dernières NOTES</h1>
+        <article v-for="(note) in notes" :key="note">
+            <router-link :to="'/notes/' + note.id">                
+                  <h2 class="note-title">{{ note.title }}</h2>
+                  <p>sdljkflskdjlsdj</p>
+                  <img v-if="note.image" :src="note.image" alt="image"> 
+            </router-link>
+        </article>
+    </section>
+</template>
+-->
+
+<template>
+    <section>
+        <div class="side-title">
+            <img alt="Vue logo" src="../assets/icon/icon-left-font-monochrome-black.png" />
+        </div>
+        <h1 class="main-title">Dernières notes envoyées</h1>
+        <div class="note-list">
+            <div v-for="(note) in notes" :key="note" class="single-note">
+                <h2 class="single-note__title"><router-link :to="'/notes/' + note.id">{{ note.title }}</router-link></h2>
+                <div class="note-about">
+                    <p class="note-about__user">Par {{ note.userId }}.</p>
+                    <p class="note-about__date">Le {{ note.createdAt }}.</p>
+                </div>
+                <p class="single-note__content">{{ note.content }}</p>
+                <p class="single-note__view"><router-link :to="'/notes/' + note.id">Voir la note</router-link></p>
+            </div>
+        </div>
+    </section>
+</template>
+
 
 <script>
 import DataNote from "../services/DataNote";
 
 export default {
     name: "notes",
+    data() {
+        return {
+            notes: []
+        };
+    },/*
     data() {
         return {
             notes: [],
@@ -46,8 +88,9 @@ export default {
             page: 2,
             pageSize: 5
         };
-    },
+    },*/
     methods: {
+        /*
         getRequestParams(page, pageSize) {
             let params = {};
 
@@ -61,14 +104,12 @@ export default {
 
             return params;
         },
+        */
         retrieveNotes() {
-            const params = this.getRequestParams(
-                this.page,
-                this.pageSize
-            );
-            DataNote.getAll(params)
+            DataNote.getAll()
             .then(response => {
-                const { notes } = response.data;
+                // const { notes } = response.data;  // when pagination active
+                const notes = response.data;
                 this.notes = notes.reverse();  // taking "notes" array in the object response, and reversing it
                 console.log("Notes data", response.data);
             })
@@ -76,6 +117,7 @@ export default {
                 console.log(e);
             });
         },
+        /*
         retrievePages() {
             DataNote.getAll()
             .then(response => {
@@ -91,7 +133,6 @@ export default {
             this.page = event.target.value;
             this.retrieveNotes();
         },
-        /*
         retrieveAuthors() {
             UserData.getAll()
             .then(response => {
@@ -111,7 +152,7 @@ export default {
    },
    mounted() {
         this.retrieveNotes();
-        this.retrievePages();
+        //this.retrievePages();
         // this.retrieveUsers();
         // this.displayAuthor();
     }

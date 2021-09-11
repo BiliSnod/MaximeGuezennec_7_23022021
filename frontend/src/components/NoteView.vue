@@ -6,22 +6,29 @@
         <div v-if="actualNote">
             <h1 class="main-title">{{ actualNote.title }}</h1>
             <div class="single-note">
-                <p class="single-note__date">Le {{ actualNote.createdAt }}.</p>
+                <div class="note-about">
+                    <p class="note-about__user">Par {{ actualNote.userId }}.</p>
+                    <p class="note-about__date">Le {{ actualNote.createdAt.split('T')[0] }}.</p>
+                </div>
                 <p class="single-note__content">{{ actualNote.content }}</p>
             </div>
             <div class="comment-list">
                 <h2 v-if="actualNote.comments.length === 0">Aucun commentaire</h2>
                 <h2 v-else>Commentaires de la note</h2>
-                <div v-for="(comment) in comments" :key="comment" class="single-comment">
+                <div v-for="(comment) in comments" :key="comment" class="list-comment">
                     <div class="comment-about">
-                        <p class="comment-about__user">Par {{ comment.author }}.</p>
-                        <p class="comment-about__date">Le {{ comment.createdAt }}.</p>
+                        <p class="comment-about__user">Par {{ comment.userId }}.</p>
+                        <p class="comment-about__date">Le {{ comment.createdAt.split('T')[0] }}.</p>
                     </div>
-                    <!--<p>{{ UserData }}</p>-->
-                    <p class="single-comment__message">{{ comment.message }}</p>
+                    <p class="list-comment__message">{{ comment.message }}</p>
+                    <div>
+                        <p v-if="currentAdmin" class="list-comment__view"><router-link :to="'/notes/comments/' + comment.id">Édition du commentaire</router-link></p>
+                        <!--<button @click="deleteComment" class="note-actions__button note-actions__button--delete">Supprimer ce commentaire</button>-->
+                    </div>
                 </div>
             </div>
-            <div class="note-modify">
+            <div v-if="currentAdmin" class="note-modify">
+                <h2 class="default-subtitle">Éditer la note</h2>
                 <form class="modify-fields">
                     <div class="modify-fields__title">
                         <label for="title">Title</label>
@@ -33,7 +40,7 @@
                     </div>
                 </form>
             </div>
-            <div class="note-actions">
+            <div v-if="currentAdmin"  class="note-actions">
                 <p>{{ message }}</p>
                 <button type="submit" @click="updateNote" class="note-actions__button">Mettre à jour la note</button>
                 <button @click="deleteNote" class="note-actions__button note-actions__button--delete">Supprimer la note</button>
@@ -54,6 +61,17 @@ export default {
             comments: [],
             message: ""
         };
+    },
+    computed: {
+        currentUser() {  // stating if the user is logged in
+            return this.$store.state.auth.user;
+        },
+        currentAdmin() {  // stating if the user got an admin role
+        if (this.currentUser && this.currentUser['roles']) {
+            return this.currentUser['roles'].includes('ROLE_ADMIN');
+        }
+        return false;
+        }
     },
     methods: {
         getNote(id) {
@@ -85,7 +103,7 @@ export default {
             .then(response => {
 
                 console.log(response.data);
-                this.$router.push({ name: "notes" });
+                this.$router.push({ name: "notes" });  // reload page
 
             })
             .catch(e => {
@@ -103,6 +121,31 @@ export default {
             .catch(e => {
                 console.log(e);
             });
+        /*
+        },
+        deleteComment(id) {
+            DataComment.getAll(id)
+            .then(response => {
+
+                this.comments = response.data.comments;
+                console.log("DEL",response.data.id);
+                
+                DataComment.delete(this.comments.id)
+                .then(response => {
+                    
+                console.log(response.data);
+                this.$router.push({ name: "notes" });
+
+            })
+            .catch(e => {
+                console.log(e);
+            });
+
+            })
+            .catch(e => {
+                console.log(e);
+            });
+        */
         }
     },
     mounted() {
@@ -136,7 +179,23 @@ export default {
     }
 }
 
-.single-comment {
+.note-about {
+    display: flex;
+    justify-content: space-between;
+
+    &__user {
+        font-weight: 600;
+        padding: 0 50px;
+    }
+
+    &__date {
+        font-style: italic;
+        padding: 0 50px;
+        text-align: right;
+    }
+}
+
+.list-comment {
     background-color: #ddd;
     border-radius: 25px;
     margin: 30px auto;
@@ -144,7 +203,43 @@ export default {
     width: 60%;
 
     &__message {
+        font-size: 1.2rem;
         text-align: left;
+        text-indent: 5%;
+    }
+
+    &__view {
+    
+        a {
+            background-color: #b9e9ff;
+            border-radius: 10px;
+            color: #312C50;
+            font-weight: bold;
+            padding: 10px;
+            text-decoration: none;
+
+            &:hover, &:focus {
+                background-color: #85d8ff;
+            }
+        }
+    }
+}
+
+.comment-about {
+    background-color: #666;
+    border-radius: 10px;
+    color: #fff;
+    display: flex;
+    padding: 0 10px;
+    justify-content: space-between;
+
+    &__user {
+        font-weight: 600;
+    }
+
+    &__date {
+        text-align: right;
+        font-style: italic;
     }
 }
 

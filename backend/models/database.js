@@ -32,6 +32,10 @@ database.comments.belongsTo(database.notes, {  // using "belongsTo" method to li
     foreignKey: "noteId"
 });
 
+database.comments.belongsTo(database.users, {  // using "belongsTo" method to link a comment with a user
+    foreignKey: "userId"
+});
+
 database.users.belongsToMany(database.roles, {  // using "belongsToMany" method to link user and role
     through: "user_roles",  // TODO rename as user_role ?
     foreignKey: "userId",

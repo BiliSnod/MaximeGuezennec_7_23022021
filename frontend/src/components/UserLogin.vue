@@ -45,13 +45,13 @@ export default {
     data() {
         const schema = yup.object().shape({
             email: yup.string().required("Vous devez entrer une adresse e-mail."),
-            password: yup.string().required("Vous devez entrer un mot de passe."),
+            password: yup.string().required("Vous devez entrer un mot de passe.")
         });
 
         return {
             loading: false,
             message: "",
-            schema,
+            schema
         };
     },
     computed: {

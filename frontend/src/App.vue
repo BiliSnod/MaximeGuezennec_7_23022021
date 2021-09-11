@@ -155,6 +155,13 @@ export default {
     padding: 20px;
 }
 
+.default-subtitle {
+    background-color: #b9e9ff;
+    border-radius: 10px;
+    margin: 20px 36px;
+    padding: 10px;
+}
+
 .main-button {
     text-align: center;
 

@@ -6,6 +6,7 @@ import UserLogin from "../components/UserLogin.vue";
 import UserProfile from "../components/UserProfile.vue";
 import NotesAll from "../components/NotesAll.vue";
 import NoteView from "../components/NoteView.vue";
+import CommentView from "../components/CommentView.vue";
 import NoteNew from "../components/NoteNew.vue";
 
 
@@ -41,6 +42,11 @@ const routes = [
         path: "/notes/:id",
         name: "note",
         component: NoteView,
+    },
+    {
+        path: "/notes/comments/:id",
+        name: "comment",
+        component: CommentView,
     },
     {
         path: "/new",

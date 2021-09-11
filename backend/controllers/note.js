@@ -6,7 +6,7 @@ const Comment = database.comments;  // importing model for comments
 const Op = database.Sequelize.Op;  // calling Sequelize operators
 
 
-/* --- Pagination functions [o] --- */
+/* --- Pagination functions [o] --- /
 const getPage = (page, size) => {
 
     const limit = size ? +size : 5;  // defining default number of notes displayed on each page
@@ -63,9 +63,9 @@ exports.createComment = (req, res) => {
     }
 
     const comment = {  // getting data from query to fill the Note model
-        author: req.body.author,
         message: req.body.message,
-        noteId: req.body.noteId
+        noteId: req.body.noteId,
+        userId: req.body.userId
     };
 
     Comment.create(comment)
@@ -105,7 +105,7 @@ exports.updateNote = (req, res) => {
 /* --- Controller to modify an existing Note [x] --- */
 
 
-/* --- Controller to modify an existing Comment [o] --- */
+/* --- Controller to modify an existing Comment [o] --- /
 exports.updateComment = (req, res) => {
 
     const id = req.params.commentId;  // getting ID of the note from the query parameter
@@ -251,7 +251,25 @@ exports.findOneComment = (req, res) => {
 /* --- Controller to get all existing Note [o] --- */
 exports.findAllNotes = (req, res) => {
 
-    const { page, size, title } = req.query;  // getting query current page
+    const title = req.query.title;  // defining query's title
+    var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;  // finding notes by their title
+  
+    Note.findAll({ where: condition })
+    .then(data => {
+        res.send(data);
+    })
+    .catch(err => {
+        res.status(500).send({ message: "Impossible de récupérer les notes." });
+    });
+
+};
+/* --- Controller to get all existing Note [x] --- */
+
+
+/* --- Controller to get all existing Note with pagination [o] --- /
+exports.findAllNotes = (req, res) => {
+
+    const { page, size, title } = req.query;  // getting query's current page
     let condition = title ? { title: { [Op.like]: `%${title}%` } } : null;  // finding notes by their title
 
     const { limit, offset } = getPage(page, size);  // getting query current limit and offset
