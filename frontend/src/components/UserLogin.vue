@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p><img alt="Vue logo side" src="../assets/icon/icon-left-font.png" class="loggedout-logo" /></p>
+        <p><a href="/"><img alt="Vue logo side" src="../assets/icon/icon-left-font.png" class="loggedout-logo" /></a></p>
         <h1 class="main-title">Connectez-vous</h1>
         <div class="default-block">
             <Form @submit="handleLogin" :validation-schema="schema">

@@ -1,6 +1,9 @@
 <template>
     <div>
         <header>
+            <div class="side-title">
+                <a href="/"><img src="../assets/icon/icon-left-font-monochrome-black.png" alt="Vue logo"/></a>
+            </div>
             <h1 class="main-title">Informations sur {{currentUser.firstname}} {{currentUser.lastname}}</h1>
         </header>
         <section class="default-block">

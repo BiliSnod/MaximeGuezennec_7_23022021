@@ -50,7 +50,7 @@
 <template>
     <section>
         <div class="side-title">
-            <img alt="Vue logo" src="../assets/icon/icon-left-font-monochrome-black.png" />
+            <a href="/"><img src="../assets/icon/icon-left-font-monochrome-black.png" alt="Vue logo"/></a>
         </div>
         <h1 class="main-title">Dernières notes envoyées</h1>
         <div class="note-list">

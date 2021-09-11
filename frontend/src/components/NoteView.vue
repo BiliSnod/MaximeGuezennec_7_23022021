@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="side-title">
-            <img alt="Vue logo" src="../assets/icon/icon-left-font-monochrome-black.png" />
+            <a href="/"><img src="../assets/icon/icon-left-font-monochrome-black.png" alt="Vue logo"/></a>
         </div>
         <div v-if="actualNote">
             <h1 class="main-title">{{ actualNote.title }}</h1>

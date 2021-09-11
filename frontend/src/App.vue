@@ -1,21 +1,22 @@
 <template>
     <div>
-        <nav class="main-menu">
-            <ul>
-                <li><router-link to="/">Accueil</router-link></li>
-                <!-- Only show for admin account
-                <li v-if="currentAdmin"><router-link to="/admin">Admin</router-link></li> -->
-                <!-- Only show when user is logged out -->
-                <li v-if="!currentUser"><router-link to="/signup">Inscription</router-link></li>
-                <li v-if="!currentUser"><router-link to="/login">Connexion</router-link></li>
-                <!-- Only show when user logged in -->
-                <li v-if="currentUser"><router-link to="/profile">Profil</router-link></li>
-                <li v-if="currentUser"><router-link to="/notes">Notes</router-link></li>
-                <li v-if="currentUser"><router-link to="/new">Publier</router-link></li>
-                <li v-if="currentUser"><a @click.prevent="logOut">Déconnexion</a></li>
-            </ul>
-        </nav>
-
+        <header>
+            <nav class="main-menu">
+                <ul>
+                    <!-- <li><router-link to="/">Accueil</router-link></li> -->
+                    <!-- Only show for admin account
+                    <li v-if="currentAdmin"><router-link to="/admin">Admin</router-link></li> -->
+                    <!-- Only show when user is logged out -->
+                    <li v-if="!currentUser"><router-link to="/signup">Inscription</router-link></li>
+                    <li v-if="!currentUser"><router-link to="/login">Connexion</router-link></li>
+                    <!-- Only show when user is logged in -->
+                    <li v-if="currentUser"><router-link to="/profile">Profil</router-link></li>
+                    <li v-if="currentUser"><router-link to="/notes">Notes</router-link></li>
+                    <li v-if="currentUser"><router-link to="/new">Publier</router-link></li>
+                    <li v-if="currentUser"><a @click.prevent="logOut">Déconnexion</a></li>
+                </ul>
+            </nav>
+        </header>
         <!-- Nested content from router -->
         <div>
             <router-view />
@@ -68,7 +69,7 @@ export default {
 
 .side-title {
     width: 100%;
-    z-index: -1;
+    // z-index: -1;
 
     @media screen and (min-width: 640px) {
         max-width: 50%;
@@ -86,6 +87,11 @@ export default {
         height: 100px;
         object-fit: cover;
         width: 50%;
+        transition: all 400ms ease-in-out;
+
+        &:hover, &:focus {
+            transform: rotate(-1deg);
+        }
     }
 }
 
