@@ -57,7 +57,7 @@
             <div v-for="(note) in notes" :key="note" class="single-note">
                 <h2 class="single-note__title"><router-link :to="'/notes/' + note.id">{{ note.title }}</router-link></h2>
                 <div class="note-about">
-                    <p class="note-about__user">Par {{ note.userId }}.</p>
+                    <p class="note-about__user">Par {{ note.firstname }} {{ note.lastname }}.</p>
                     <p class="note-about__date">Le {{ note.createdAt }}.</p>
                 </div>
                 <p class="single-note__content">{{ note.content }}</p>

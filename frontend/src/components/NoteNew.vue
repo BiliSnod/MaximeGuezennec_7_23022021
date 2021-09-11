@@ -19,17 +19,16 @@
                         </div>
                     </div>
                 </form>
-
                 <div class="note-button">
+                    <p>{{ message }}</p>                    
                     <button @click="saveNote" class="note-button__confirm">Envoyez une nouvelle note !</button>
                 </div>
             </div>
-
             <div v-else>
                 <div class="note-button">
                     <p>La note a bien été envoyée !</p>
                     <p><router-link :to="'/notes/' + note.id">Afficher la note.</router-link></p>
-                    <button class="btn btn-success" @click="newNote">Envoyez une autre note</button>  <!-- TODO proposer de voir la note avec lien -->
+                    <button class="btn btn-success" @click="newNote">Envoyez une autre note</button>
                 </div>
             </div>
         </div>
@@ -47,9 +46,12 @@ export default {
             note: {
                 title: "",
                 content: "",
-                userId: ""
+                userId: "",
+                firstname: "",
+                lastname: ""
             },
-            submitted: false
+            submitted: false,
+            message: ""
         };
     },
     computed: {
@@ -62,9 +64,10 @@ export default {
             var data = {
                 title: this.note.title,
                 content: this.note.content,
-                userId: this.currentUser.id
+                userId: this.currentUser.id,
+                firstname: this.currentUser.firstname, 
+                lastname: this.currentUser.lastname
             };
-
             DataNote.create(data)
             .then(response => {
 
@@ -75,12 +78,16 @@ export default {
             })
             .catch(e => {
                 console.log(e);
+                this.message = "Il faut obligatoirement un titre et un contenu !";
             });
         },    
         newNote() {
             this.submitted = false;
             this.note = {};
         }
+    },
+    mounted() {
+        this.message = "";
     }
 };
 </script>

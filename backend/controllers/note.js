@@ -29,15 +29,17 @@ const getPageData = (data, page, limit) => {
 /* --- Controller to create a new Note [o] --- */
 exports.createNote = (req, res) => {
 
-    if (!req.body.title) {  // checking if a title exists
-        res.status(400).send({ message: "Il faut obligatoirement un titre !" });
+    if (!req.body.title || !req.body.content) {  // checking if a title exists
+        res.status(400).send({ message: "Il faut obligatoirement un titre et un contenu !" });
         return;
     }
 
     const note = {  // getting data from query to fill the Note model
         title: req.body.title,
         content: req.body.content,
-        userId: req.body.userId
+        userId: req.body.userId,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname
     };
     
     Note.create(note)  // using "create" method to send model to database
@@ -65,7 +67,9 @@ exports.createComment = (req, res) => {
     const comment = {  // getting data from query to fill the Note model
         message: req.body.message,
         noteId: req.body.noteId,
-        userId: req.body.userId
+        userId: req.body.userId,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname
     };
 
     Comment.create(comment)

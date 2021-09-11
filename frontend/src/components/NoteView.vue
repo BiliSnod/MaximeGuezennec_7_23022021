@@ -7,7 +7,7 @@
             <h1 class="main-title">{{ actualNote.title }}</h1>
             <div class="single-note">
                 <div class="note-about">
-                    <p class="note-about__user">Par {{ actualNote.userId }}.</p>
+                    <p class="note-about__user">Par {{ actualNote.firstname }} {{ actualNote.lastname }}.</p>
                     <p class="note-about__date">Le {{ actualNote.createdAt.split('T')[0] }}.</p>
                 </div>
                 <p class="single-note__content">{{ actualNote.content }}</p>
