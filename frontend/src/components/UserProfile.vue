@@ -14,11 +14,18 @@
                 <p v-for="role in currentUser.roles" :key="role"><strong>Accès :</strong> <i>{{role}}</i></p>
             </div>
         </section>
+        <section>
+            <div>
+                <button @click="deleteComment" class="dd">Supprimer ce compte</button>
+            </div>
+        </section>
     </div>
 </template>
 
 
 <script>
+import DataUser from "../services/DataUser";
+
 export default {
     name: 'Profile',
     computed: {
@@ -30,6 +37,21 @@ export default {
             return this.currentUser['roles'].includes('ROLE_ADMIN');
         }
         return false;
+        }
+    },
+    methods: {
+        deleteComment() {
+            DataUser.delete(this.currentUser.id)
+            .then(response => {
+
+                console.log(response.data);
+                this.$store.dispatch('auth/logout');  // removing user information in localStorage and logging out deleted user
+                this.$router.push({ name: "welcome" });  // going back to welcome page after deletion
+
+            })
+            .catch(e => {
+                console.log(e);
+            });
         }
     },
     mounted() {

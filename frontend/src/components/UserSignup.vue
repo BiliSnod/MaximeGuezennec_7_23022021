@@ -70,11 +70,6 @@ export default {
             return this.$store.state.auth.status.loggedIn;
         },
     },
-    mounted() {
-        if (this.loggedIn) {
-            this.$router.push("/profile");
-        }
-    },
     methods: {
         handleSignup(user) {
             this.message = "";
@@ -91,18 +86,18 @@ export default {
             },
             (error) => {
 
-                this.message =
-                    (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
-                    error.message ||
-                    error.toString();
+                this.message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
                 this.successful = false;
                 this.loading = false;
 
             });
-        },
+        }
     },
+    mounted() {
+        if (this.loggedIn) {
+            this.$router.push("/profile");
+        }
+    }
 };
 </script>
 

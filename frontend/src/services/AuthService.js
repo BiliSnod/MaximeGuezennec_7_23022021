@@ -3,6 +3,15 @@
     const API_URL = "http://localhost:3000/api/auth/";
 
     class AuthService {
+        signup(user) {
+            return axios.post(API_URL + "signup", {
+                firstname: user.firstname,
+                lastname: user.lastname,
+                email: user.email,
+                password: user.password
+            });
+        }
+        
         login(user) {
             return axios
             .post(API_URL + "login", {
@@ -23,14 +32,6 @@
             localStorage.removeItem("user");
         }
 
-        signup(user) {
-            return axios.post(API_URL + "signup", {
-                firstname: user.firstname,
-                lastname: user.lastname,
-                email: user.email,
-                password: user.password
-            });
-        }
     }
 
     export default new AuthService();
