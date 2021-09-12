@@ -1,11 +1,11 @@
 <!-- Homepage template calling "Welcome" componen -->
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/icon/icon-above-font.png" />
-    <div class="home__welcome">
-      <Welcome msg="Bienvenue sur Groupomania" />
-    </div>    
-  </div>
+    <div class="home">
+        <img alt="Vue logo" src="../assets/icon/icon-above-font.png" />
+        <div class="home__welcome">
+                <Welcome msg="Bienvenue sur Groupomania" />
+        </div>    
+    </div>
 </template>
 
 <script>

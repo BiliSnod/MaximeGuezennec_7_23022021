@@ -4,34 +4,34 @@
             <a href="/"><img src="../assets/icon/icon-left-font-monochrome-black.png" alt="Vue logo"/></a>
         </div>
         <h1 class="main-title">Partagez une nouvelle note</h1>
-        <div class="note-submit">
+        <section class="object-submit">
             <div v-if="!submitted">
                 <form>
-                    <div class="note-fields">
-                        <div class="note-fields__title">
+                    <div class="object-fields">
+                        <div class="object-fields__title">
                             <label for="title">Titre</label>
-                            <input type="text" id="title" name="title" class="form-control" v-model="note.title" placeholder="Entrez votre titre ici !" required />                
+                            <input type="text" id="title" name="title" v-model="note.title" placeholder="Entrez votre titre ici !" required />                
                         </div>
                     
-                        <div class="note-fields__content">
+                        <div class="object-fields__content">
                             <label for="content">Contenu</label>
-                            <textarea id="content" name="content" v-model="note.content" class="form-control" placeholder="Entrez votre texte ici !" required />
+                            <textarea id="content" name="content" v-model="note.content" placeholder="Entrez votre texte ici !" required />
                         </div>
                     </div>
                 </form>
-                <div class="note-button">
-                    <p>{{ message }}</p>                    
-                    <button @click="saveNote" class="note-button__confirm">Envoyez une nouvelle note !</button>
+                <div class="object-button">
+                    <p class="object-button__message">{{ message }}</p>                    
+                    <button @click="saveNote">Envoyez une nouvelle note !</button>
                 </div>
             </div>
             <div v-else>
-                <div class="note-button">
-                    <p>La note a bien été envoyée !</p>
+                <div class="object-button">
+                    <p class="object-button__message object-button__message--valid">La note a bien été envoyée !</p>
                     <p><router-link :to="'/notes/' + note.id">Afficher la note.</router-link></p>
-                    <button class="btn btn-success" @click="newNote">Envoyez une autre note</button>
+                    <button @click="newNote">Envoyez une autre note</button>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
 </template>
 
@@ -93,15 +93,15 @@ export default {
 </script>
 
 
-<style lang="scss" scoped>
-.note-submit {
+<style lang="scss">
+.object-submit {
     background-color: #f5f5f5;
     border-radius: 10px;
     margin: 20px 36px;
     padding: 20px;
 }
 
-.note-fields {
+.object-fields {
     display: table;
     margin: 0 auto;
     width: 80%;
@@ -134,8 +134,35 @@ export default {
     }    
 }
 
-.note-button {
-    text-align: center;
+.object-button {
+
+    &__message {
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin: 0 auto;
+
+        &--valid {
+        background-color: #9fffcf;
+        border-radius: 10px;
+        padding: 10px;
+        width: 40%;
+        }
+    }
+
+    a {
+        background-color: #fcfcfc;
+        border: 3px solid #eee;
+        border-radius: 15px;
+        color: #312c50;
+        cursor: pointer;
+        display: block;
+        font-weight: bold;
+        margin: 0 auto;
+        padding: 10px;
+        text-decoration: none;
+        transition: all 200ms ease-out;
+        width: 40%;
+    }
 
     & button {
         background-color: #e52901;

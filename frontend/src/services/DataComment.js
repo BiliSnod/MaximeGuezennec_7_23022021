@@ -2,8 +2,8 @@ import http from "../http-common";
 
 class DataComment {
     
-    create(id) {
-        return http.post(`/notes/${id}/comments`);
+    create(id, data) {
+        return http.post(`/notes/${id}/comments`, data);
     }
     /* DISCARDED
     update(id, data) {

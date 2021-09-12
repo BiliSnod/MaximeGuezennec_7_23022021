@@ -8,7 +8,7 @@
             <div class="single-comment">
                 <p>(réponse à <router-link :to="'/notes/' + actualComment.noteId">la note n°{{ actualComment.noteId }}</router-link>)</p>
                 <div class="comment-about">
-                    <p class="comment-about__user">Par {{ actualComment.userId }}.</p>
+                    <p class="comment-about__user">Par {{ actualComment.firstname }} {{ actualComment.lastname }}.</p>
                     <p class="comment-about__date">Le {{ actualComment.createdAt.split('T')[0] }}.</p>
                 </div>
                 <p class="single-comment__message">{{ actualComment.message }}</p>

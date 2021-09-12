@@ -3,49 +3,78 @@
         <div class="side-title">
             <a href="/"><img src="../assets/icon/icon-left-font-monochrome-black.png" alt="Vue logo"/></a>
         </div>
-        <div v-if="actualNote">
-            <h1 class="main-title">{{ actualNote.title }}</h1>
-            <div class="single-note">
-                <div class="note-about">
-                    <p class="note-about__user">Par {{ actualNote.firstname }} {{ actualNote.lastname }}.</p>
-                    <p class="note-about__date">Le {{ actualNote.createdAt.split('T')[0] }}.</p>
+        <section v-if="actualNote">
+            <!-- Displaying this note -->
+            <article>
+                <h1 class="main-title">{{ actualNote.title }}</h1>
+                <div class="single-note">
+                    <div class="note-about">
+                        <p class="note-about__user">Par {{ actualNote.firstname }} {{ actualNote.lastname }}.</p>
+                        <p class="note-about__date">Le {{ actualNote.createdAt.split('T')[0] }}.</p>
+                    </div>
+                    <p class="single-note__content">{{ actualNote.content }}</p>
                 </div>
-                <p class="single-note__content">{{ actualNote.content }}</p>
-            </div>
-            <div class="comment-list">
-                <h2 v-if="actualNote.comments.length === 0">Aucun commentaire</h2>
-                <h2 v-else>Commentaires de la note</h2>
-                <div v-for="(comment) in comments" :key="comment" class="list-comment">
-                    <div class="comment-about">
-                        <p class="comment-about__user">Par {{ comment.userId }}.</p>
-                        <p class="comment-about__date">Le {{ comment.createdAt.split('T')[0] }}.</p>
-                    </div>
-                    <p class="list-comment__message">{{ comment.message }}</p>
-                    <div>
-                        <p v-if="currentAdmin" class="list-comment__view"><router-link :to="'/notes/comments/' + comment.id">Édition du commentaire</router-link></p>
-                        <!--<button @click="deleteComment" class="note-actions__button note-actions__button--delete">Supprimer ce commentaire</button>-->
+                <div class="comment-list">
+                    <h2 v-if="actualNote.comments.length === 0">Aucun commentaire</h2>
+                    <h2 v-else>Commentaires de la note</h2>
+                    <article v-for="(comment) in comments" :key="comment" class="list-comment">
+                        <div class="comment-about">
+                            <p class="comment-about__user">Par {{ comment.firstname }} {{ comment.lastname }}.</p>
+                            <p class="comment-about__date">Le {{ comment.createdAt.split('T')[0] }}.</p>
+                        </div>
+                        <p class="list-comment__message">{{ comment.message }}</p>
+                        <div>
+                            <p v-if="currentAdmin" class="list-comment__view"><router-link :to="'/notes/comments/' + comment.id">Édition du commentaire</router-link></p>
+                            <!--<button @click="deleteComment" class="note-actions__button note-actions__button--delete">Supprimer ce commentaire</button>-->
+                        </div>
+                    </article>
+                </div>
+            </article>
+            <!-- Form to send a comment to this note -->
+            <section class="object-submit">
+                <div v-if="!submitted">
+                    <form>
+                        <div class="object-fields">                    
+                            <div class="object-fields__content">
+                                <label for="message">Message</label>
+                                <textarea id="message" name="message" v-model="comment.message" placeholder="Entrez votre texte ici !" required />
+                            </div>
+                        </div>
+                    </form>
+                    <div class="object-button">
+                        <p class="object-button__message">{{ alertComment }}</p>                    
+                        <button @click="saveComment" class="comment-button__confirm">Envoyez le commentaire !</button>
                     </div>
                 </div>
-            </div>
-            <div v-if="currentAdmin" class="note-modify">
-                <h2 class="default-subtitle">Éditer la note</h2>
-                <form class="modify-fields">
-                    <div class="modify-fields__title">
-                        <label for="title">Title</label>
-                        <input type="text" id="title" name="title" v-model="actualNote.title" />
+                <div v-else>
+                    <div class="object-button">
+                        <p class="object-button__message object-button__message--valid">Le commentaire a bien été envoyé !</p>
+                        <p><router-link :to="'/notes/comments/' + comment.id">Voir le commentaire.</router-link></p>
                     </div>
-                    <div class="modify-fields__content">
-                        <label for="content">Contenu</label>
-                        <textarea type="text" id="content" name="content" v-model="actualNote.content" />
-                    </div>
-                </form>
-            </div>
-            <div v-if="currentAdmin"  class="note-actions">
-                <p>{{ message }}</p>
-                <button type="submit" @click="updateNote" class="note-actions__button">Mettre à jour la note</button>
-                <button @click="deleteNote" class="note-actions__button note-actions__button--delete">Supprimer la note</button>
-            </div>
-        </div>
+                </div>
+            </section>
+            <!-- Admin panel to edit this note or delete it -->
+            <section v-if="currentAdmin">
+                <div class="note-modify">
+                    <h2 class="default-subtitle">Éditer la note</h2>
+                    <form class="modify-fields">
+                        <div class="modify-fields__title">
+                            <label for="title">Title</label>
+                            <input type="text" id="title" name="title" v-model="actualNote.title" />
+                        </div>
+                        <div class="modify-fields__content">
+                            <label for="content">Contenu</label>
+                            <textarea type="text" id="content" name="content" v-model="actualNote.content" />
+                        </div>
+                    </form>
+                </div>
+                <div  class="note-actions">
+                    <p>{{ alertEdit }}</p>
+                    <button type="submit" @click="updateNote" class="note-actions__button">Mettre à jour la note</button>
+                    <button @click="deleteNote" class="note-actions__button note-actions__button--delete">Supprimer la note</button>
+                </div>
+            </section>
+        </section>
     </div>
 </template>
 
@@ -59,7 +88,17 @@ export default {
         return {
             actualNote: null,
             comments: [],
-            message: ""
+            alertEdit: "",
+
+            comment: {
+                message: "",
+                noteId: "",
+                userId: "",
+                firstname: "",
+                lastname: ""
+            },
+            submitted: false,
+            alertComment: ""
         };
     },
     computed: {
@@ -91,7 +130,7 @@ export default {
             .then(response => {
 
                 console.log(response.data);
-                this.message = "La note a été modifiée.";
+                this.alertEdit = "La note a été modifiée.";
 
             })
             .catch(e => {
@@ -121,8 +160,33 @@ export default {
             .catch(e => {
                 console.log(e);
             });
-        /*
         },
+        saveComment() {
+            var data = {
+                message: this.comment.message,
+                noteId: this.actualNote.id,
+                userId: this.currentUser.id,
+                firstname: this.currentUser.firstname, 
+                lastname: this.currentUser.lastname
+            };
+            DataComment.create(this.actualNote.id, data)
+            .then(response => {
+
+                this.comment.id = response.data.id;
+                console.log(response.data);
+                this.submitted = true;
+                
+            })
+            .catch(e => {
+                console.log(e);
+                this.alertComment = "Le message est vide !";
+            });
+        },    
+        newComment() {
+            this.submitted = false;
+            this.comment = {};
+        }
+        /*
         deleteComment(id) {
             DataComment.getAll(id)
             .then(response => {
@@ -145,13 +209,14 @@ export default {
             .catch(e => {
                 console.log(e);
             });
-        */
         }
+        */
     },
     mounted() {
-        this.message = "";
+        this.alertEdit = "";
         this.getNote(this.$route.params.id);
         this.retrieveComments(this.$route.params.id);
+        this.alertComment = "";
     }
 };
 </script>
