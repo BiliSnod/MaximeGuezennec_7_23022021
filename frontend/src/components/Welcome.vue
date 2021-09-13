@@ -12,7 +12,7 @@
 
 <script>
 export default {
-    name: 'Welcome',
+    name: "Welcome",
     props: {  // definining the type of data for "msg"
         msg: String
     },    

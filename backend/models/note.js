@@ -6,10 +6,10 @@ module.exports = (sequelize, DataTypes) => {
         },
         content: {
             type: DataTypes.STRING(2040)
-        }/*,
+        },
         mediaUrl: {
             type: DataTypes.STRING
-        },
+        }/*,
         mediaType: {
             type: DataTypes.STRING
         }*/

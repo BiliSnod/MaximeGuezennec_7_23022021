@@ -9,7 +9,7 @@
                 <p>(réponse à <router-link :to="'/notes/' + actualComment.noteId">la note n°{{ actualComment.noteId }}</router-link>)</p>
                 <div class="comment-about">
                     <p class="comment-about__user">Par {{ actualComment.firstname }} {{ actualComment.lastname }}.</p>
-                    <p class="comment-about__date">Le {{ actualComment.createdAt.split('T')[0] }}.</p>
+                    <p class="comment-about__date">Le {{ actualComment.createdAt.split("T")[0] }}.</p>
                 </div>
                 <p class="single-comment__message">{{ actualComment.message }}</p>
             </div>
@@ -35,8 +35,8 @@ export default {
             return this.$store.state.auth.user;
         },
         currentAdmin() {  // stating if the user got an admin role
-        if (this.currentUser && this.currentUser['roles']) {
-            return this.currentUser['roles'].includes('ROLE_ADMIN');
+        if (this.currentUser && this.currentUser["roles"]) {
+            return this.currentUser["roles"].includes("ROLE_ADMIN");
         }
         return false;
         }

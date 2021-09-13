@@ -1,5 +1,5 @@
 export default function authHeader() {
-    let user = JSON.parse(localStorage.getItem('user'));  // check "user" in Local Storage
+    let user = JSON.parse(localStorage.getItem("user"));  // check "user" in Local Storage
 
     if (user && user.accessToken) {  // when there is a "user" with a JSON Web Token
         return user.accessToken;  // giving a X-Access-Token

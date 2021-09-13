@@ -1,4 +1,5 @@
 const express = require("express");  // importing Express
+const path = require("path");  // getting access to file system's path
 
 const authRoutes = require("./routes/user");  // importing user routes
 const noteRoutes = require("./routes/note");  // importing note routes
@@ -42,6 +43,7 @@ function initial() {
 }
 /* --- Reinitialize database for testing [x] --- */
 
+app.use("/medias", express.static(path.join(__dirname, "medias")));  // middleware to allow requests to access "medias" directory using the "static" method of Express, and the "path" method
 
 app.use("/api/auth", authRoutes);  // importing router for authentication
 app.use("/api/notes", noteRoutes);  // importing router for notes

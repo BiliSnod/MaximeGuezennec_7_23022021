@@ -21,6 +21,10 @@
         <div>
             <router-view />
         </div>
+        <footer class="site-information">
+            <p><em>Groupomania</em> &copy; 2021</p>
+            <p><a href="mailto:contact@groupomania.fr">Nous contacter</a></p>
+        </footer>
     </div>
 </template>
 
@@ -33,16 +37,16 @@ export default {
             return this.$store.state.auth.user;
         },
         currentAdmin() {  // stating if the user got an admin role
-        if (this.currentUser && this.currentUser['roles']) {
-            return this.currentUser['roles'].includes('ROLE_ADMIN');
+        if (this.currentUser && this.currentUser["roles"]) {
+            return this.currentUser["roles"].includes("ROLE_ADMIN");
         }
         return false;
         },
     },
     methods: {
         logOut() {  // disconnecting user function, redirecting to login page
-            this.$store.dispatch('auth/logout');
-            this.$router.push('/login');
+            this.$store.dispatch("auth/logout");
+            this.$router.push("/login");
         }
     }
 };
@@ -185,6 +189,23 @@ export default {
 
         &:hover, &:focus {
             background-color: #ad1f01;
+        }
+    }
+}
+
+.site-information {
+    background-color: #E5F7FF;
+    border-radius: 10px;
+    margin: 20px 0;
+    padding: 10px;
+
+    a {
+        color: #312c50;
+        font-weight: 600;
+        text-decoration: none;
+
+        &:hover, &:focus {
+            color: #ad1f01;
         }
     }
 }

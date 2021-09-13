@@ -5,17 +5,21 @@
         </div>
         <h1 class="main-title">Partagez une nouvelle note</h1>
         <section class="object-submit">
+            <!-- Diplay form to post a note -->
             <div v-if="!submitted">
-                <form>
+                <form enctype="multipart/form-data">
                     <div class="object-fields">
                         <div class="object-fields__title">
                             <label for="title">Titre</label>
                             <input type="text" id="title" name="title" v-model="note.title" placeholder="Entrez votre titre ici !" required />                
-                        </div>
-                    
+                        </div>                    
                         <div class="object-fields__content">
                             <label for="content">Contenu</label>
                             <textarea id="content" name="content" v-model="note.content" placeholder="Entrez votre texte ici !" required />
+                        </div>
+                        <div class="object-fields__media">
+                            <label for="media">Fichier (image)</label>
+                            <input @change="setMedia" type="file" id="media" name="media" placeholder="Insérez une image ici (JPEG, PNG, GIF)"  accept=".jpg,.jpeg,.png,.gif" required />                
                         </div>
                     </div>
                 </form>
@@ -24,6 +28,7 @@
                     <button @click="saveNote">Envoyez une nouvelle note !</button>
                 </div>
             </div>
+            <!-- Display confirmation when note has been submitted -->
             <div v-else>
                 <div class="object-button">
                     <p class="object-button__message object-button__message--valid">La note a bien été envoyée !</p>
@@ -37,21 +42,24 @@
 
 
 <script>
-import DataNote from "../services/DataNote";
+import axios from "axios";  // importing Axios HTTP client to use promises
+import authHeader from "../services/AuthHeader";  // calling authHeader function for token
+// import DataNote from "../services/DataNote";
 
 export default {
     name: "new",
     data() {
         return {
-            note: {
+            note: { // "note" object structure
                 title: "",
                 content: "",
+                mediaUrl: "",
                 userId: "",
                 firstname: "",
                 lastname: ""
             },
-            submitted: false,
-            message: ""
+            submitted: false,  // default submission state
+            message: ""  // empty message until submission problem 
         };
     },
     computed: {
@@ -60,11 +68,47 @@ export default {
         }
     },
     methods: {
+        setMedia(event) {
+            // this.mediaUrl = this.$refs.media.medias[0];
+            this.note.mediaUrl = event.target.files[0];
+            // console.log("ETF", event.target.media[0])
+        },
+        saveNote() {            
+            const formData = new FormData(); // creating a FormData
+            formData.append("title", this.note.title)
+            formData.append("content", this.note.content);
+            formData.append("media", this.note.mediaUrl);
+            formData.append("userId", this.currentUser.id);
+            formData.append("firstname", this.currentUser.firstname);
+            formData.append("lastname", this.currentUser.lastname);
+            axios.post("http://localhost:3000/api/notes", formData, {
+                headers: {
+                "Content-Type": "multipart/form-data",  // not necessary according to FormData MDN page ?
+                "X-Access-Token": authHeader()  // adding the token with the request
+                }
+            })
+            .then((response) => {
+
+                console.log(response);      
+                this.note.id = response.data.id;  // defining note ID for the confirmation link     
+                this.submitted = true;  // displaying "submitted" HTML block
+
+            })
+            .catch(e => {
+                console.log(e);
+                this.message = "Il faut obligatoirement un titre et un contenu et une image !";
+            });
+        },
+        /*
         saveNote() {
-            var data = {
+            let formData = new FormData();
+            formData.append("mediaUrl", this.mediaUrl);
+
+            let data = {
                 title: this.note.title,
                 content: this.note.content,
                 userId: this.currentUser.id,
+                mediaUrl: this.mediaUrl,
                 firstname: this.currentUser.firstname, 
                 lastname: this.currentUser.lastname
             };
@@ -80,14 +124,15 @@ export default {
                 console.log(e);
                 this.message = "Il faut obligatoirement un titre et un contenu !";
             });
-        },    
+        },
+        */  
         newNote() {
             this.submitted = false;
             this.note = {};
         }
     },
     mounted() {
-        this.message = "";
+        this.message = "";  // defining the message as empty on page load
     }
 };
 </script>
@@ -106,7 +151,7 @@ export default {
     margin: 0 auto;
     width: 80%;
 
-    &__title, &__content {
+    &__title, &__content, &__media {
         display: table-row;
         text-align: left;
     }

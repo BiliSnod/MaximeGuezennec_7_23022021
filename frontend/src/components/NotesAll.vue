@@ -54,15 +54,18 @@
         </div>
         <h1 class="main-title">Dernières notes envoyées</h1>
         <div class="note-list">
-            <div v-for="(note) in notes" :key="note" class="single-note">
+            <article v-for="(note) in notes" :key="note" class="single-note">
                 <h2 class="single-note__title"><router-link :to="'/notes/' + note.id">{{ note.title }}</router-link></h2>
                 <div class="note-about">
                     <p class="note-about__user">Par {{ note.firstname }} {{ note.lastname }}.</p>
-                    <p class="note-about__date">Le {{ note.createdAt }}.</p>
+                    <p class="note-about__date">Le {{ note.createdAt.split("T")[0] }}.</p>
                 </div>
-                <p class="single-note__content">{{ note.content }}</p>
+                <div class="single-note__content">
+                    <img class="single-note__image" :src="note.mediaUrl" :alt="'Image de la note ' + note.id + ' par ' + note.firstname" />
+                    <p>{{ note.content }}</p>
+                </div>
                 <p class="single-note__view"><router-link :to="'/notes/' + note.id">Voir la note</router-link></p>
-            </div>
+            </article>
         </div>
     </section>
 </template>
@@ -219,8 +222,34 @@ export default {
         border-radius: 25px;
         font-size: 1.8rem;
         margin: 0 auto;
-        padding: 20px;
-        text-align: left;
+
+        @media screen and (min-width: 1280px) {
+        display: flex;
+        justify-content: space-around;
+        }
+
+        img {
+            border-radius: 10px;
+            height: 200px;
+            object-fit: cover;
+            max-width: 100%;
+            margin: 20px 2% 0 2%;
+
+            @media screen and (min-width: 1280px) {
+                max-width: 25%;
+                margin: 5% 2%;
+            }
+        }
+
+        p {
+            padding: 40px 2%;
+            text-align: left;
+
+            @media screen and (min-width: 1280px) {
+                margin: 5% 2%;
+                padding: 0;
+            }
+        }
     }
 
     &__view {

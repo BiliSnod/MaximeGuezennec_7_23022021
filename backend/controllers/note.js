@@ -1,4 +1,5 @@
 const database = require("../models/database");  // importing database model
+const fs = require("fs");  // importing "fs" package that enable modifications on file system
 
 const Note = database.notes;  // importing model for notes
 const Comment = database.comments;  // importing model for comments
@@ -29,7 +30,16 @@ const getPageData = (data, page, limit) => {
 /* --- Controller to create a new Note [o] --- */
 exports.createNote = (req, res) => {
 
-    if (!req.body.title || !req.body.content) {  // checking if a title exists
+    /*
+    let mediaUrl = "";
+    if (req.file) {
+        mediaUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
+    }
+    */
+    
+    // const mediaExtension = req.file.filename.split(".")[req.file.filename.length - 1];
+
+    if (!req.body.title || !req.body.content || !req.file) {  // checking if a all required fields exist
         res.status(400).send({ message: "Il faut obligatoirement un titre et un contenu !" });
         return;
     }
@@ -37,6 +47,8 @@ exports.createNote = (req, res) => {
     const note = {  // getting data from query to fill the Note model
         title: req.body.title,
         content: req.body.content,
+        mediaUrl: `${req.protocol}://${req.get("host")}/medias/${req.file.filename}`,  // `{mediaUrl}`
+        // mediaType: mediaExtension,
         userId: req.body.userId,
         firstname: req.body.firstname,
         lastname: req.body.lastname

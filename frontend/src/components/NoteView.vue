@@ -10,9 +10,12 @@
                 <div class="single-note">
                     <div class="note-about">
                         <p class="note-about__user">Par {{ actualNote.firstname }} {{ actualNote.lastname }}.</p>
-                        <p class="note-about__date">Le {{ actualNote.createdAt.split('T')[0] }}.</p>
+                        <p class="note-about__date">Le {{ actualNote.createdAt.split("T")[0] }}.</p>
                     </div>
-                    <p class="single-note__content">{{ actualNote.content }}</p>
+                    <figure>
+                        <img class="single-note__image" :src="actualNote.mediaUrl" :alt="'Image de la note ' + actualNote.id + ' par ' + actualNote.firstname" />
+                        <figcaption class="single-note__content">{{ actualNote.content }}</figcaption>
+                    </figure>
                 </div>
                 <div class="comment-list">
                     <h2 v-if="actualNote.comments.length === 0">Aucun commentaire</h2>
@@ -20,9 +23,11 @@
                     <article v-for="(comment) in comments" :key="comment" class="list-comment">
                         <div class="comment-about">
                             <p class="comment-about__user">Par {{ comment.firstname }} {{ comment.lastname }}.</p>
-                            <p class="comment-about__date">Le {{ comment.createdAt.split('T')[0] }}.</p>
+                            <p class="comment-about__date">Le {{ comment.createdAt.split("T")[0] }}.</p>
                         </div>
-                        <p class="list-comment__message">{{ comment.message }}</p>
+                        <div>
+                            <p class="list-comment__message">{{ comment.message }}</p>
+                        </div>
                         <div>
                             <p v-if="currentAdmin" class="list-comment__view"><router-link :to="'/notes/comments/' + comment.id">Édition du commentaire</router-link></p>
                             <!--<button @click="deleteComment" class="note-actions__button note-actions__button--delete">Supprimer ce commentaire</button>-->
@@ -106,8 +111,8 @@ export default {
             return this.$store.state.auth.user;
         },
         currentAdmin() {  // stating if the user got an admin role
-        if (this.currentUser && this.currentUser['roles']) {
-            return this.currentUser['roles'].includes('ROLE_ADMIN');
+        if (this.currentUser && this.currentUser["roles"]) {
+            return this.currentUser["roles"].includes("ROLE_ADMIN");
         }
         return false;
         }
@@ -231,6 +236,16 @@ export default {
         font-weight: 600;
         padding: 0 50px;
         text-align: right;
+    }
+
+    &__image {
+        border-radius: 10px;
+        margin: 20px auto;
+        max-width: 100%;
+
+        @media screen and (min-width: 768px) {
+        max-height: 800px;
+        }
     }
 
     &__content {

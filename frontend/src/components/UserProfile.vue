@@ -15,8 +15,8 @@
             </div>
         </section>
         <section>
-            <div>
-                <button @click="deleteComment" class="dd">Supprimer ce compte</button>
+            <div class="main-button">
+                <button @click="deleteComment">Supprimer ce compte</button>
             </div>
         </section>
     </div>
@@ -27,14 +27,14 @@
 import DataUser from "../services/DataUser";
 
 export default {
-    name: 'Profile',
+    name: "Profile",
     computed: {
         currentUser() {  // stating if the user is logged in
             return this.$store.state.auth.user;
         },
         currentAdmin() {  // stating if the user got an admin role
-        if (this.currentUser && this.currentUser['roles']) {
-            return this.currentUser['roles'].includes('ROLE_ADMIN');
+        if (this.currentUser && this.currentUser["roles"]) {
+            return this.currentUser["roles"].includes("ROLE_ADMIN");
         }
         return false;
         }
@@ -45,7 +45,7 @@ export default {
             .then(response => {
 
                 console.log(response.data);
-                this.$store.dispatch('auth/logout');  // removing user information in localStorage and logging out deleted user
+                this.$store.dispatch("auth/logout");  // removing user information in localStorage and logging out deleted user
                 this.$router.push({ name: "welcome" });  // going back to welcome page after deletion
 
             })
@@ -56,7 +56,7 @@ export default {
     },
     mounted() {
         if (!this.currentUser) {
-            this.$router.push('/login');
+            this.$router.push("/login");
         }
     }
 };
