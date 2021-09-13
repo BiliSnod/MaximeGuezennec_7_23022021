@@ -105,7 +105,7 @@ exports.updateNote = (req, res) => {
 
     Note.update(req.body, { where: { id: id } })  // using "update" method to modify note content with request body
     .then(num => {
-
+        
         if (num == 1) {  // promise have to return "1"
             res.send({ message: "La note a été modifiée." });
         } else {
@@ -149,18 +149,30 @@ exports.deleteNote = (req, res) => {
 
     const id = req.params.noteId;  // getting ID of the note from the query parameter
 
-    Note.destroy({ where: { id: id } })  // using "destroy" method to delete identified note
-    .then(num => {
+    Note.findByPk(id)  // using "findByPk" method to find data of the identified note
+    .then(note => {
+        
+        const filename = note.mediaUrl.split("/medias/")[1];  // using "split" method to get the media filename from the complete URL
 
-        if (num == 1) {  // TODO promise have to return "1"
-        res.status(200).send({ message: "La note a été supprimée." });
-        } else {
-        res.status(400).send({ message: "La note n'a pas pu être supprimée." });
-        }
+        fs.unlink(`medias/${filename}`, () => {  // using "unlink" method from "fs" to delete the file
+            Note.destroy({ where: { id: id } })  // using "destroy" method to delete identified note
+            .then(num => {
+
+                if (num == 1) {  // promise have to return "1"
+                res.status(200).send({ message: "La note a été supprimée." });
+                } else {
+                res.status(400).send({ message: "La note n'a pas pu être supprimée." });
+                }
+
+            })
+            .catch(err => {
+                res.status(500).send({ message: "La note n'a pas pu être supprimée." });
+            });
+        });
 
     })
     .catch(err => {
-        res.status(500).send({ message: "La note n'a pas pu être supprimée." });
+        res.status(500).send({ message: "Impossible de récupérer la note." });
     });
 
 };

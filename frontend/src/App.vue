@@ -100,21 +100,21 @@ export default {
 }
 
 .loggedout-logo {
-  height: 120px;
-  object-fit: cover;
-  width: 100%;
+    height: 120px;
+    object-fit: cover;
+    width: 100%;
 
-  @media screen and (min-width: 640px) {
-    width: 75%;
-  }
+    @media screen and (min-width: 640px) {
+        width: 75%;
+    }
 
-  @media screen and (min-width: 768px) {
-    width: 50%;
-  }
+    @media screen and (min-width: 768px) {
+        width: 50%;
+    }
 
-  @media screen and (min-width: 1024px) {
-    max-width: 800px;
-  }
+    @media screen and (min-width: 1024px) {
+        max-width: 800px;
+    }
 }
 
 .main-menu {

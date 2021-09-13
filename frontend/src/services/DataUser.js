@@ -1,5 +1,6 @@
 import http from "../http-common";
 
+
 class DataUser {
     
     delete(id) {
@@ -15,5 +16,6 @@ class DataUser {
     }
     
 }
+
 
 export default new DataUser();

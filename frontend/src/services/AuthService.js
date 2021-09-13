@@ -2,6 +2,7 @@
 
     const apiPath = "http://localhost:3000/api/auth/";  // locating API's URL for authentication
 
+
     class AuthService {
         signup(user) {  // defining the object to create on sign up
             return axios.post(apiPath + "signup", {
@@ -32,5 +33,6 @@
         }
 
     }
+    
 
     export default new AuthService();

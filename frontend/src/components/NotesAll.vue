@@ -162,6 +162,7 @@ export default {
 };
 </script>
 
+
 <style lang="scss" scoped>
 .page-change {
     display: flex;
@@ -225,7 +226,7 @@ export default {
 
         @media screen and (min-width: 1280px) {
         display: flex;
-        justify-content: space-around;
+        // justify-content: space-between;
         }
 
         img {

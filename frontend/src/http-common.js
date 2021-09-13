@@ -2,7 +2,6 @@ import axios from "axios";  // importing Axios to set HTTP base URL and headers
 import authHeader from "./services/AuthHeader";  // calling authHeader function for token
 
 
-
 /* --- Configuring headers defaults for Axios [o] --- */
 export default axios.create({
     baseURL: "http://localhost:3000/api",

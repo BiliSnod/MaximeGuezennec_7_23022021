@@ -3,6 +3,7 @@ import AuthService from "../services/AuthService";
 const user = JSON.parse(localStorage.getItem("user"));  // getting user information from localStorage object
 const initialState = user ? { status: { loggedIn: true }, user } : { status: { loggedIn: false }, user: null };  // state to know if user is logged in or not
 
+
 export const auth = {
     namespaced: true,  // limiting the methods to this module
     state: initialState,

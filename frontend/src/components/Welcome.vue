@@ -24,6 +24,7 @@ export default {
 }
 </script>
 
+
 <style lang="scss" scoped>
 /* --- scoped" attribute to limit CSS to this component only --- */
 h1 {

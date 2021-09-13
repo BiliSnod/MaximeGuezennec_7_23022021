@@ -39,6 +39,7 @@
     </div>
 </template>
 
+
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
@@ -100,6 +101,7 @@ export default {
     }
 };
 </script>
+
 
 <style lang="scss" scoped>
 .signup-fields {

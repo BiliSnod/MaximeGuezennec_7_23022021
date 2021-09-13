@@ -70,7 +70,11 @@
                         <div class="modify-fields__content">
                             <label for="content">Contenu</label>
                             <textarea type="text" id="content" name="content" v-model="actualNote.content" />
-                        </div>
+                        </div><!-- TODO
+                        <div class="modify-fields__content">
+                            <label for="media">Image</label>
+                            <input @change="setMedia" type="file" id="ledia" name="content" accept=".jpg,.jpeg,.png,.gif" />
+                        </div>-->
                     </form>
                 </div>
                 <div  class="note-actions">
@@ -82,6 +86,7 @@
         </section>
     </div>
 </template>
+
 
 <script>
 import DataNote from "../services/DataNote";
@@ -225,6 +230,7 @@ export default {
     }
 };
 </script>
+
 
 <style lang="scss" scoped>
 .single-note {

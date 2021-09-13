@@ -1,5 +1,6 @@
 import http from "../http-common";
 
+
 class DataComment {
     
     create(id, data) {
@@ -23,5 +24,6 @@ class DataComment {
     }
     
 }
+
 
 export default new DataComment();

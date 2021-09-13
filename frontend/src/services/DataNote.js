@@ -1,5 +1,6 @@
 import http from "../http-common";
 
+
 class DataNote {
 
     create(data) {
@@ -31,5 +32,6 @@ class DataNote {
     }
     
 }
+
 
 export default new DataNote();

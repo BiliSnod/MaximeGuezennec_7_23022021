@@ -19,7 +19,7 @@
                         </div>
                         <div class="object-fields__media">
                             <label for="media">Fichier (image)</label>
-                            <input @change="setMedia" type="file" id="media" name="media" placeholder="Insérez une image ici (JPEG, PNG, GIF)"  accept=".jpg,.jpeg,.png,.gif" required />                
+                            <input @change="setMedia" type="file" id="media" name="media" placeholder="Insérez une image ici (JPEG, PNG, GIF)" accept=".jpg,.jpeg,.png,.gif" required />                
                         </div>
                     </div>
                 </form>
