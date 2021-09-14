@@ -2,7 +2,7 @@ const express = require("express");  // importing Express
 const path = require("path");  // getting access to file system's path
 
 const globalRateLimiter = require("./middlewares/rateLimiter");  // importing "express-rate-limit" middleware
-const helmet = require("helmet");
+const helmet = require("helmet");  // importing Helmet package to secure HTTP headers
 
 const authRoutes = require("./routes/user");  // importing user routes
 const noteRoutes = require("./routes/note");  // importing note routes

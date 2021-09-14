@@ -1,11 +1,9 @@
 <template>
     <div v-if="currentUser">
-        <header>
-            <div class="side-title">
-                <a href="/"><img src="../assets/icon/icon-left-font-monochrome-black.png" alt="Vue logo"/></a>
-            </div>
-            <h1 class="main-title">Informations sur {{currentUser.firstname}} {{currentUser.lastname}}</h1>
-        </header>
+        <div class="logo-nav">
+            <a href="/"><img src="../assets/icon/icon-left-font-monochrome-black.png" alt="Groupomania logo"/></a>
+        </div>
+        <h1 class="main-title">Informations sur {{currentUser.firstname}} {{currentUser.lastname}}</h1>
         <!-- Displaying user info, according to role -->
         <section class="default-block">
             <p v-if="currentAdmin"><strong>Token :</strong> <i>{{currentUser.accessToken.substring(0, 20)}} ... {{currentUser.accessToken.substr(currentUser.accessToken.length - 20)}}</i></p>

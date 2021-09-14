@@ -1,16 +1,16 @@
 <template>
     <div>
-        <p><a href="/"><img alt="Vue logo side" src="../assets/icon/icon-left-font.png" class="loggedout-logo" /></a></p>
+        <p><a href="/"><img src="../assets/icon/icon-left-font.png" class="logo-median" alt="Groupomania logo" /></a></p>
         <h1 class="main-title">Connectez-vous</h1>
         <section class="default-block">
             <Form @submit="handleLogin" :validation-schema="schema">
-                <div class="login-fields">
-                    <div class="login-fields__email">
+                <div class="entry-form">
+                    <div class="entry-form__field">
                         <label for="email">E-mail</label>
                         <Field name="email" type="text" />
                         <ErrorMessage name="email" />
                     </div>
-                    <div class="login-fields__password">
+                    <div class="entry-form__field">
                         <label for="password">Password</label>
                         <Field name="password" type="password" />
                         <ErrorMessage name="password" />
@@ -85,37 +85,51 @@ export default {
 </script>
 
 
-<style lang="scss" scoped>
-.login-fields {
-    display: table;
+<style lang="scss">
+.entry-form {
     margin: 0 auto;
     width: 80%;
 
-    &__email, &__password {
-        display: table-row;
+    @media screen and (min-width: 640px) {
+        display: table;
+        margin: 0 auto;
+        width: 80%;
+    }
+
+    &__field {
         text-align: left;
+
+        @media screen and (min-width: 640px) {
+            display: table-row;
+        }
     }
 
     & label {
-        display: table-cell;
         font-weight: 600;
         max-width: 10%;
-        padding: 10px;
         text-align: right;
         text-transform: uppercase;
         vertical-align: middle;
+
+        @media screen and (min-width: 640px) {
+            padding: 10px;
+            display: table-cell;
+        }
     }
 
     & input, textarea {
         background-color: #fff;
         border: none;
         border-radius: 10px;
-        display: table-cell;
-        font-family: Avenir, Helvetica, Arial, sans-serif;
+        font-family: Sarala, Arial, sans-serif;
         font-size: 1.2em;
         margin: 10px;
         padding: 10px;
         width: 100%;
+
+        @media screen and (min-width: 640px) {
+            display: table-cell;
+        }
     }    
 }
 </style>

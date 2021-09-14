@@ -1,37 +1,37 @@
 <template>
     <div v-if="currentUser">
-        <div class="side-title">
-            <a href="/"><img src="../assets/icon/icon-left-font-monochrome-black.png" alt="Vue logo"/></a>
+        <div class="logo-nav">
+            <a href="/"><img src="../assets/icon/icon-left-font-monochrome-black.png" alt="Groupomania logo"/></a>
         </div>
         <h1 class="main-title">Partagez une nouvelle note</h1>
-        <section class="object-submit">
+        <section class="default-block">
             <!-- Diplay form to post a note -->
             <div v-if="!submitted">
                 <form enctype="multipart/form-data">
-                    <div class="object-fields">
-                        <div class="object-fields__title">
+                    <div class="entry-form">
+                        <div class="entry-form__field">
                             <label for="title">Titre</label>
                             <input type="text" id="title" name="title" v-model="note.title" placeholder="Entrez votre titre ici !" required />                
                         </div>                    
-                        <div class="object-fields__content">
+                        <div class="entry-form__field">
                             <label for="content">Contenu</label>
                             <textarea id="content" name="content" v-model="note.content" placeholder="Entrez votre texte ici !" required />
                         </div>
-                        <div class="object-fields__media">
-                            <label for="media">Fichier (image)</label>
+                        <div class="entry-form__field">
+                            <label for="media">Image [JPEG/PNG/GIF]</label>
                             <input @change="setMedia" type="file" id="media" name="media" placeholder="Insérez une image ici (JPEG, PNG, GIF)" accept=".jpg,.jpeg,.png,.gif" required />                
                         </div>
                     </div>
                 </form>
-                <div class="object-button">
-                    <p class="object-button__message">{{ message }}</p>                    
+                <div class="main-button">
+                    <p class="main-button__message">{{ message }}</p>                    
                     <button @click="saveNote">Envoyez une nouvelle note !</button>
                 </div>
             </div>
             <!-- Display confirmation when note has been submitted -->
             <div v-else>
-                <div class="object-button">
-                    <p class="object-button__message object-button__message--valid">La note a bien été envoyée !</p>
+                <div class="main-button">
+                    <p class="main-button__message main-button__message--valid">La note a bien été envoyée !</p>
                     <p><router-link :to="'/notes/' + note.id">Afficher la note.</router-link></p>
                     <button @click="newNote">Envoyez une autre note</button>
                 </div>
@@ -138,6 +138,11 @@ export default {
 </script>
 
 
+<style lang="scss" scoped>
+/* --- share stylesheet with UserLogin.vue --- */
+</style>
+
+<!--
 <style lang="scss">
 .object-submit {
     background-color: #f5f5f5;
@@ -146,7 +151,7 @@ export default {
     padding: 20px;
 }
 
-.object-fields {
+.entry-form {
     display: table;
     margin: 0 auto;
     width: 80%;
@@ -226,4 +231,25 @@ export default {
         }
     }
 }
+
+.note-about {
+    font-style: italic;
+
+    @media screen and (min-width: 640px) {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__user {
+        font-weight: 600;
+        padding: 0 50px;
+        text-align: left;
+    }
+
+    &__date {
+        padding: 0 50px;
+        text-align: right;
+    }
+}
 </style>
+-->

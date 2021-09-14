@@ -1,19 +1,19 @@
 <template>
     <div v-if="currentUser">
-        <div class="side-title">
-            <a href="/"><img src="../assets/icon/icon-left-font-monochrome-black.png" alt="Vue logo"/></a>
+        <div class="logo-nav">
+            <a href="/"><img src="../assets/icon/icon-left-font-monochrome-black.png" alt="Groupomania logo"/></a>
         </div>
         <section v-if="actualNote">
             <!-- Displaying this note -->
             <article>
                 <h1 class="main-title">{{ actualNote.title }}</h1>
                 <div class="single-note">
-                    <div class="note-about">
-                        <p class="note-about__user">Par {{ actualNote.firstname }} {{ actualNote.lastname }}.</p>
-                        <p class="note-about__date">Le {{ actualNote.createdAt.split("T")[0] }}.</p>
+                    <div class="object-about">
+                        <p class="object-about__user">Par {{ actualNote.firstname }} {{ actualNote.lastname }}.</p>
+                        <p class="object-about__date">Le {{ actualNote.createdAt.split("T")[0] }}.</p>
                     </div>
                     <figure>
-                        <img class="single-note__image" :src="actualNote.mediaUrl" :alt="'Image de la note ' + actualNote.id + ' par ' + actualNote.firstname" />
+                        <a :href="actualNote.mediaUrl"><img class="single-note__image" :src="actualNote.mediaUrl" :alt="'Image de la note ' + actualNote.id + ' par ' + actualNote.firstname" /></a>
                         <figcaption class="single-note__content">{{ actualNote.content }}</figcaption>
                     </figure>
                 </div>
@@ -36,51 +36,51 @@
                 </div>
             </article>
             <!-- Form to send a comment to this note -->
-            <section class="object-submit">
+            <section class="default-block">
                 <div v-if="!submitted">
                     <form>
-                        <div class="object-fields">                    
-                            <div class="object-fields__content">
+                        <div class="entry-form">                    
+                            <div class="entry-form__field">
                                 <label for="message">Message</label>
-                                <textarea id="message" name="message" v-model="comment.message" placeholder="Entrez votre texte ici !" required />
+                                <textarea id="message" name="message" v-model="comment.message" placeholder="Entrez votre commentaire ici !" required />
                             </div>
                         </div>
                     </form>
-                    <div class="object-button">
-                        <p class="object-button__message">{{ alertComment }}</p>                    
+                    <div class="main-button">
+                        <p class="main-button__message">{{ alertComment }}</p>                    
                         <button @click="saveComment" class="comment-button__confirm">Envoyez le commentaire !</button>
                     </div>
                 </div>
                 <div v-else>
-                    <div class="object-button">
-                        <p class="object-button__message object-button__message--valid">Le commentaire a bien été envoyé !</p>
+                    <div class="main-button">
+                        <p class="main-button__message main-button__message--valid">Le commentaire a bien été envoyé !</p>
                         <p><router-link :to="'/notes/comments/' + comment.id">Voir le commentaire.</router-link></p>
                     </div>
                 </div>
             </section>
             <!-- Admin panel to edit this note or delete it -->
             <section v-if="currentAdmin">
-                <div class="note-modify">
+                <div class="default-block">
                     <h2 class="default-subtitle">Éditer la note</h2>
-                    <form class="modify-fields">
-                        <div class="modify-fields__title">
+                    <form class="entry-form">
+                        <div class="entry-form__field">
                             <label for="title">Title</label>
                             <input type="text" id="title" name="title" v-model="actualNote.title" />
                         </div>
-                        <div class="modify-fields__content">
+                        <div class="entry-form__field">
                             <label for="content">Contenu</label>
                             <textarea type="text" id="content" name="content" v-model="actualNote.content" />
                         </div><!-- TODO
-                        <div class="modify-fields__content">
+                        <div class="modify-form__content">
                             <label for="media">Image</label>
                             <input @change="setMedia" type="file" id="ledia" name="content" accept=".jpg,.jpeg,.png,.gif" />
                         </div>-->
                     </form>
                 </div>
-                <div  class="note-actions">
+                <div class="main-button">
                     <p>{{ alertEdit }}</p>
-                    <button type="submit" @click="updateNote" class="note-actions__button">Mettre à jour la note</button>
-                    <button @click="deleteNote" class="note-actions__button note-actions__button--delete">Supprimer la note</button>
+                    <button type="submit" @click="updateNote">Mettre à jour la note</button>
+                    <button @click="deleteNote" class="note-actions__delete">Supprimer la note</button>
                 </div>
             </section>
         </section>
@@ -234,14 +234,14 @@ export default {
 
 <style lang="scss" scoped>
 .single-note {
-    margin: 0 auto;
-    width: 60%;
+    margin: 20px auto 60px auto;
 
-    &__date {
-        font-style: italic;
-        font-weight: 600;
-        padding: 0 50px;
-        text-align: right;
+    @media screen and (min-width: 640px) {
+        width: 82%;
+    }
+
+    @media screen and (min-width: 1280px) {
+        width: 75%;
     }
 
     &__image {
@@ -249,7 +249,7 @@ export default {
         margin: 20px auto;
         max-width: 100%;
 
-        @media screen and (min-width: 768px) {
+        @media screen and (min-width: 640px) {
         max-height: 800px;
         }
     }
@@ -258,26 +258,21 @@ export default {
         border-left: 20px solid #aaa;
         border-right: 20px solid #aaa;
         border-radius: 25px;
-        font-size: 1.8em;
+        font-size: 1.3rem;
+        line-height: 1.5rem;
         margin-bottom: 80px;
         padding: 20px;
         text-align: left;
-    }
-}
 
-.note-about {
-    display: flex;
-    justify-content: space-between;
+        @media screen and (min-width: 640px) {
+            font-size: 1.7rem;
+            line-height: 2rem;
+        }
 
-    &__user {
-        font-weight: 600;
-        padding: 0 50px;
-    }
-
-    &__date {
-        font-style: italic;
-        padding: 0 50px;
-        text-align: right;
+        @media screen and (min-width: 1024px) {
+            font-size: 1.9rem;
+            line-height: 2.2rem;
+        }
     }
 }
 
@@ -285,7 +280,7 @@ export default {
     background-color: #ddd;
     border-radius: 25px;
     margin: 30px auto;
-    padding: 20px;
+    padding: 3%;
     width: 60%;
 
     &__message {
@@ -315,28 +310,34 @@ export default {
     background-color: #666;
     border-radius: 10px;
     color: #fff;
-    display: flex;
-    padding: 0 10px;
+    padding: 0 5%;
     justify-content: space-between;
+
+    @media screen and (min-width: 640px) {
+        display: flex;
+    }
 
     &__user {
         font-weight: 600;
+        padding: 0;
+        text-align: left;
     }
 
     &__date {
+        padding: 0;
         text-align: right;
-        font-style: italic;
     }
 }
 
+/*
 .note-modify {
     background-color: #f5f5f5;
     border-radius: 10px;
-    margin: 20px 36px;
-    padding: 20px;
+    margin: 20px 0;
+    padding: 5%;
 }
 
-.modify-fields {
+.modify-form {
     display: table;
     margin: 0 auto;
     width: 80%;
@@ -368,11 +369,20 @@ export default {
         width: 100%;
     }    
 }
+*/
 
 .note-actions {
     margin: 20px;
     text-align: center;
 
+    &__delete {
+        background-color: #333333;
+
+        &:hover, &:focus {
+            background-color: #0a0a0a;
+        }
+    }
+    /*
     &__button {
         background-color: #e52901;
         border: none;
@@ -397,5 +407,6 @@ export default {
             }
         }
     }
+    */
 }
 </style>

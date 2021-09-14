@@ -1,26 +1,26 @@
 <template>
     <div>
-        <p><a href="/"><img alt="Vue logo side" src="../assets/icon/icon-left-font.png" class="loggedout-logo" /></a></p>
+        <p><a href="/"><img src="../assets/icon/icon-left-font.png" class="logo-median" alt="Groupomania logo" /></a></p>
         <h1 v-if="!successful" class="main-title">Inscrivez-vous</h1>
         <div class="default-block">
             <Form @submit="handleSignup" :validation-schema="schema">
-                <div v-if="!successful" class="signup-fields">
-                    <div class="signup-fields__firstname">
+                <div v-if="!successful" class="entry-form">
+                    <div class="entry-form__field">
                         <label for="firstname">Prénom</label>
                         <Field name="firstname" type="text" />
                         <ErrorMessage name="firstname" />
                     </div>
-                    <div class="signup-fields__lastname">
+                    <div class="entry-form__field">
                         <label for="lastname">Nom</label>
                         <Field name="lastname" type="text" />
                         <ErrorMessage name="lastname" />
                     </div>
-                    <div class="signup-fields__email">
+                    <div class="entry-form__field">
                         <label for="email">E-mail</label>
                         <Field name="email" type="email" />
                         <ErrorMessage name="email" />
                     </div>
-                    <div class="signup-fields__password">
+                    <div class="entry-form__field">
                         <label for="password">Mot de passe</label>
                         <Field name="password" type="password" />
                         <ErrorMessage name="password" />
@@ -105,40 +105,5 @@ export default {
 
 
 <style lang="scss" scoped>
-.signup-fields {
-    display: table;
-    margin: 0 auto;
-    width: 80%;
-
-    &__firstname, &__lastname, &__email, &__password {
-        display: table-row;
-        text-align: left;
-    }
-
-    & label {
-        display: table-cell;
-        font-weight: 600;
-        max-width: 10%;
-        padding: 10px;
-        text-align: right;
-        text-transform: uppercase;
-        vertical-align: middle;
-    }
-
-    & input, textarea {
-        background-color: #fff;
-        border: none;
-        border-radius: 10px;
-        display: table-cell;
-        font-family: Avenir, Helvetica, Arial, sans-serif;
-        font-size: 1.2em;
-        margin: 10px;
-        padding: 10px;
-        width: 100%;
-    }    
-}
-
-.bold {
-    font-weight: 600;
-}
+/* --- share stylesheet with UserLogin.vue --- */
 </style>

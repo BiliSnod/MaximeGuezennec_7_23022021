@@ -1,8 +1,8 @@
 <!-- Homepage template calling "Welcome" component -->
 <template>
       <div class="home">
-            <img alt="Vue logo" src="../assets/icon/icon-above-font.png" />
-            <div class="home__welcome">
+            <img src="../assets/icon/icon-above-font.png" class="logo-main" alt="Groupomania logo" />
+            <div class="default-block">
                 <Welcome msg="Bienvenue sur Groupomania" />
             </div>    
       </div>
@@ -22,28 +22,21 @@ export default {
 
 
 <style lang="scss" scoped>
-img {
+.logo-main {
     height: 240px;
     object-fit: cover;
     width: 100%;
 
-    @media screen and (min-width: 640px) {
-        height: 360px;
-        width: 75%;
+    @media screen and (min-width: 540px) {
+        height: 320px;
     }
 
     @media screen and (min-width: 768px) {
-        width: 50%;
+        width: 80%;
     }
 
     @media screen and (min-width: 1024px) {
         max-width: 800px;
     }
-}
-
-.home__welcome {
-    background-color: #f5f5f5;
-    border-radius: 10px;
-    padding: 20px;
 }
 </style>
