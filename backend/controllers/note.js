@@ -7,37 +7,8 @@ const Comment = database.comments;  // importing model for comments
 const Op = database.Sequelize.Op;  // calling Sequelize operators
 
 
-/* --- Pagination functions [o] --- /
-const getPage = (page, size) => {
-
-    const limit = size ? +size : 5;  // defining default number of notes displayed on each page
-    const offset = page ? page * limit : 0;  // defining default number of notes to skip
-
-    return { limit, offset };
-};
-
-const getPageData = (data, page, limit) => {
-
-    const { count: allNotes, rows: notes } = data;  // defining method properties name
-    const currentPage = page ? +page : 0;  // defining actual page
-    const allPages = Math.ceil(allNotes / limit);  // defining number of pages
-
-    return { allNotes, notes, allPages, currentPage };
-};
-/* --- Pagination functions [x] --- */
-
-
 /* --- Controller to create a new Note [o] --- */
 exports.createNote = (req, res) => {
-
-    /*
-    let mediaUrl = "";
-    if (req.file) {
-        mediaUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
-    }
-    */
-    
-    // const mediaExtension = req.file.filename.split(".")[req.file.filename.length - 1];
 
     if (!req.body.title || !req.body.content || !req.file) {  // checking if a all required fields exist
         res.status(400).send({ message: "Il faut obligatoirement un titre et un contenu !" });
@@ -47,8 +18,7 @@ exports.createNote = (req, res) => {
     const note = {  // getting data from query to fill the Note model
         title: req.body.title,
         content: req.body.content,
-        mediaUrl: `${req.protocol}://${req.get("host")}/medias/${req.file.filename}`,  // `{mediaUrl}`
-        // mediaType: mediaExtension,
+        mediaUrl: `${req.protocol}://${req.get("host")}/medias/${req.file.filename}`,
         userId: req.body.userId,
         firstname: req.body.firstname,
         lastname: req.body.lastname
@@ -119,29 +89,6 @@ exports.updateNote = (req, res) => {
 
 };
 /* --- Controller to modify an existing Note [x] --- */
-
-
-/* --- Controller to modify an existing Comment [o] --- /
-exports.updateComment = (req, res) => {
-
-    const id = req.params.commentId;  // getting ID of the note from the query parameter
-
-    Comment.update(req.body, { where: { id: id } })  // using "update" method to modify comment content with request body
-    .then(num => {
-
-        if (num == 1) {  // promise have to return "1"
-            res.status(200).send({ message: "La commentaire a été modifié." });
-        } else {
-            res.status(400).send({ message: "Le commentaire n'a pas pu être modifiée." });
-        }
-
-    })
-    .catch(err => {
-        res.status(500).send({ message: "La commentaire n'a pas pu être modifiée." });
-    });
-
-};
-/* --- Controller to modify an existing Comment [x] --- */
 
 
 /* --- Controller to delete an existing Note [o] --- */
@@ -224,6 +171,7 @@ exports.findOneNote = (req, res) => {
 };
 /* --- Controller to get an existing Note [x] --- */
 
+
 /* --- Controller to get an existing Note with its Comments [o] --- */
 exports.findOneNoteWithComments = (req, res) => {
     
@@ -285,29 +233,6 @@ exports.findAllNotes = (req, res) => {
     Note.findAll({ where: condition })
     .then(data => {
         res.send(data);
-    })
-    .catch(err => {
-        res.status(500).send({ message: "Impossible de récupérer les notes." });
-    });
-
-};
-/* --- Controller to get all existing Note [x] --- */
-
-
-/* --- Controller to get all existing Note with pagination [o] --- /
-exports.findAllNotes = (req, res) => {
-
-    const { page, size, title } = req.query;  // getting query's current page
-    let condition = title ? { title: { [Op.like]: `%${title}%` } } : null;  // finding notes by their title
-
-    const { limit, offset } = getPage(page, size);  // getting query current limit and offset
-  
-    Note.findAndCountAll({ where: condition, limit, offset })  // using "findAndCountAll" methode to display all existing notes filtered by query
-    .then(data => {
-
-        const response = getPageData(data, page, limit);  // defining then sending response
-        res.status(200).send(response);
-
     })
     .catch(err => {
         res.status(500).send({ message: "Impossible de récupérer les notes." });

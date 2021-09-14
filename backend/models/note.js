@@ -12,10 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         mediaUrl: {
             type: DataTypes.STRING,
             allowNull: false
-        }/*,
-        mediaType: {
-            type: DataTypes.STRING
-        }*/
+        }
     });
     
     return Note;

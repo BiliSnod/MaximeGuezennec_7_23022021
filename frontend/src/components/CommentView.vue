@@ -112,39 +112,6 @@ export default {
     }
 }
 
-/*
-.single-comment {
-    margin: 0 auto;
-    width: 60%;
-
-    &__message {
-        border-left: 20px solid #aaa;
-        border-right: 20px solid #aaa;
-        border-radius: 25px;
-        font-size: 1.8em;
-        margin-bottom: 80px;
-        padding: 20px;
-        text-align: left;
-    }
-}
-
-.comment-about {
-    display: flex;
-    justify-content: space-between;
-
-    &__user {
-        font-weight: 600;
-        padding: 0 50px;
-    }
-
-    &__date {
-        font-style: italic;
-        padding: 0 50px;
-        text-align: right;
-    }
-}
-*/
-
 .comment-actions {
     margin: 20px;
     text-align: center;
@@ -156,31 +123,5 @@ export default {
             background-color: #0a0a0a;
         }
     }
-    /*
-    &__button {
-        background-color: #e52901;
-        border: none;
-        border-radius: 10px;
-        color: #fff;
-        cursor: pointer;
-        font-size: 1.2em;
-        font-weight: 600;
-        margin: 20px;
-        padding: 20px;
-        transition: all 100ms;
-
-        &:hover, &:focus {
-            background-color: #ad1f01;
-        }
-
-        &--delete {
-            background-color: #333333;
-
-            &:hover, &:focus {
-                background-color: #0a0a0a;
-            }
-        }
-    }
-    */
 }
 </style>

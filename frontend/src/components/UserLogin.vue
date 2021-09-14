@@ -17,7 +17,6 @@
                     </div>
                 </div>
                 <div class="main-button">
-                <!--<button :disabled="loading"><span v-show="loading"></span><span>Se connecter</span></button>-->
                     <button>Se connecter</button>
                 </div>
                 <!-- Displaying a message if the form is not filled well -->
@@ -66,8 +65,6 @@ export default {
     methods: {
         handleLogin(user) {
 
-            // this.loading = true;  // when submitting form, setting to true
-
             this.$store.dispatch("auth/login", user)  // dispatching form data to global store
             .then(() => {
 
@@ -75,9 +72,7 @@ export default {
 
             },
             (error) => {
-                // this.loading = false;
                 this.message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-
             });
         },
     },

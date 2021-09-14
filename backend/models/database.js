@@ -2,6 +2,7 @@ const Sequelize = require("sequelize");  // importing "Sequelize" module to inte
 
 const databaseConfig = require("../config/database.js");  // getting data from configuration file
 
+
 const sequelize = new Sequelize(databaseConfig.database, databaseConfig.username, databaseConfig.password, {
     host: databaseConfig.host,
     dialect: databaseConfig.dialect,

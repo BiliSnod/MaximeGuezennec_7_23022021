@@ -4,8 +4,6 @@
             <nav class="main-menu">
                 <ul>
                     <!-- <li><router-link to="/">Accueil</router-link></li> -->
-                    <!-- Only show for admin account
-                    <li v-if="currentAdmin"><router-link to="/admin">Admin</router-link></li> -->
                     <!-- Only show when user is logged out -->
                     <li v-if="!currentUser"><router-link to="/signup">Inscription</router-link></li>
                     <li v-if="!currentUser"><router-link to="/login">Connexion</router-link></li>

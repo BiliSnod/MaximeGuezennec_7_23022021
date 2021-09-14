@@ -30,7 +30,6 @@
                         </div>
                         <div>
                             <p v-if="currentAdmin" class="list-comment__view"><router-link :to="'/notes/comments/' + comment.id">Édition du commentaire</router-link></p>
-                            <!--<button @click="deleteComment" class="note-actions__button note-actions__button--delete">Supprimer ce commentaire</button>-->
                         </div>
                     </article>
                 </div>
@@ -70,11 +69,7 @@
                         <div class="entry-form__field">
                             <label for="content">Contenu</label>
                             <textarea type="text" id="content" name="content" v-model="actualNote.content" />
-                        </div><!-- TODO
-                        <div class="modify-form__content">
-                            <label for="media">Image</label>
-                            <input @change="setMedia" type="file" id="ledia" name="content" accept=".jpg,.jpeg,.png,.gif" />
-                        </div>-->
+                        </div>
                     </form>
                 </div>
                 <div class="main-button">
@@ -191,36 +186,7 @@ export default {
                 console.log(e);
                 this.alertComment = "Le message est vide !";  // displaying the alert if form field is empty
             });
-        } 
-        /*  
-        newComment() {  // UNUSED
-            this.submitted = false;
-            this.comment = {};
-        },
-        deleteComment(id) {
-            DataComment.getAll(id)
-            .then(response => {
-
-                this.comments = response.data.comments;
-                console.log("DEL",response.data.id);
-                
-                DataComment.delete(this.comments.id)
-                .then(response => {
-                    
-                console.log(response.data);
-                this.$router.push({ name: "notes" });
-
-            })
-            .catch(e => {
-                console.log(e);
-            });
-
-            })
-            .catch(e => {
-                console.log(e);
-            });
         }
-        */
     },
     mounted() {
         this.alertEdit = "";  // displaying an empty note edition alert on page load
@@ -329,48 +295,6 @@ export default {
     }
 }
 
-/*
-.note-modify {
-    background-color: #f5f5f5;
-    border-radius: 10px;
-    margin: 20px 0;
-    padding: 5%;
-}
-
-.modify-form {
-    display: table;
-    margin: 0 auto;
-    width: 80%;
-
-    &__title, &__content {
-        display: table-row;
-        text-align: left;
-    }
-
-    & label {
-        display: table-cell;
-        font-weight: 600;
-        max-width: 32px;
-        padding: 10px;
-        text-align: right;
-        text-transform: uppercase;
-        vertical-align: middle;
-    }
-
-    & input, textarea {
-        background-color: #fff;
-        border: none;
-        border-radius: 10px;
-        display: table-cell;
-        font-family: Avenir, Helvetica, Arial, sans-serif;
-        font-size: 1.2em;
-        margin: 10px;
-        padding: 10px;
-        width: 100%;
-    }    
-}
-*/
-
 .note-actions {
     margin: 20px;
     text-align: center;
@@ -382,31 +306,5 @@ export default {
             background-color: #0a0a0a;
         }
     }
-    /*
-    &__button {
-        background-color: #e52901;
-        border: none;
-        border-radius: 10px;
-        color: #fff;
-        cursor: pointer;
-        font-size: 1.2em;
-        font-weight: 600;
-        margin: 20px;
-        padding: 20px;
-        transition: all 100ms;
-
-        &:hover, &:focus {
-            background-color: #ad1f01;
-        }
-
-        &--delete {
-            background-color: #333333;
-
-            &:hover, &:focus {
-                background-color: #0a0a0a;
-            }
-        }
-    }
-    */
 }
 </style>

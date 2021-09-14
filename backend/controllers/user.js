@@ -58,8 +58,8 @@ exports.login = (req, res) => {
         } else {
 
             let passwordConfirmed = bcrypt.compareSync(  // comparing with Bcrypt request's password with the password in database for this user
-            req.body.password,
-            user.password
+                req.body.password,
+                user.password
             );
 
             if (!passwordConfirmed) {  // rejecting connection if hashed email addresses dont match

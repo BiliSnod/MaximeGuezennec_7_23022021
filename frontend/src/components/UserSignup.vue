@@ -27,11 +27,9 @@
                     </div>
                 </div>
                 <div class="main-button" v-if="!successful">
-                <!-- <button :disabled="loading"><span v-show="loading"></span><span>S'inscrire</span></button> -->
                     <button>S'inscrire</button>
                 </div>                
                 <!-- Displaying a message if the form is not filled well -->
-                <!-- <div v-if="message" class="alert" :class="successful ? 'alert-success' : 'alert-danger'"> -->
                 <div v-if="message">
                     {{ message }}
                 </div>
@@ -62,7 +60,6 @@ export default {
 
         return {
             successful: false,
-            // loading: false,
             message: "",
             schema
         };
@@ -76,21 +73,18 @@ export default {
         handleSignup(user) {
             this.message = "";
             this.successful = false;
-            // this.loading = true;
 
             this.$store.dispatch("auth/signup", user)
             .then((data) => {
 
                 this.message = data.message;
                 this.successful = true;
-                // this.loading = false;
 
             },
             (error) => {
 
                 this.message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
                 this.successful = false;
-                // this.loading = false;
 
             });
         }

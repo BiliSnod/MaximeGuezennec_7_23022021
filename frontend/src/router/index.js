@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router"  // importing "vue-router" package
 
 import Welcome from "../views/Welcome.vue"
-// import PanelAdmin from "../components/PanelAdmin.vue";
 import UserSignup from "../components/UserSignup.vue";
 import UserLogin from "../components/UserLogin.vue";
 import UserProfile from "../components/UserProfile.vue";

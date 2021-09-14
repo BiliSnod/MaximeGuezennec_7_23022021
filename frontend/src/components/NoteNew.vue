@@ -44,7 +44,6 @@
 <script>
 import axios from "axios";  // importing Axios HTTP client to use promises
 import authHeader from "../services/AuthHeader";  // calling authHeader function for token
-// import DataNote from "../services/DataNote";
 
 export default {
     name: "new",
@@ -69,9 +68,7 @@ export default {
     },
     methods: {
         setMedia(event) {
-            // this.mediaUrl = this.$refs.media.medias[0];
             this.note.mediaUrl = event.target.files[0];  // getting the media file name to fill "mediaUrl"
-            // console.log("ETF", event.target.media[0])
         },
         saveNote() {            
             const formData = new FormData(); // creating a FormData, and appending all needed properties
@@ -99,33 +96,6 @@ export default {
                 this.message = "Il faut obligatoirement un titre et un contenu et une image !";
             });
         },
-        /*
-        saveNote() {
-            let formData = new FormData();
-            formData.append("mediaUrl", this.mediaUrl);
-
-            let data = {
-                title: this.note.title,
-                content: this.note.content,
-                userId: this.currentUser.id,
-                mediaUrl: this.mediaUrl,
-                firstname: this.currentUser.firstname, 
-                lastname: this.currentUser.lastname
-            };
-            DataNote.create(data)
-            .then(response => {
-
-                this.note.id = response.data.id;
-                console.log(response.data);
-                this.submitted = true;
-                
-            })
-            .catch(e => {
-                console.log(e);
-                this.message = "Il faut obligatoirement un titre et un contenu !";
-            });
-        },
-        */  
         newNote() {  // reinitializing form to send another note
             this.submitted = false;
             this.note = {};
@@ -141,115 +111,3 @@ export default {
 <style lang="scss" scoped>
 /* --- share stylesheet with UserLogin.vue --- */
 </style>
-
-<!--
-<style lang="scss">
-.object-submit {
-    background-color: #f5f5f5;
-    border-radius: 10px;
-    margin: 20px 36px;
-    padding: 20px;
-}
-
-.entry-form {
-    display: table;
-    margin: 0 auto;
-    width: 80%;
-
-    &__title, &__content, &__media {
-        display: table-row;
-        text-align: left;
-    }
-
-    & label {
-        display: table-cell;
-        font-weight: 600;
-        max-width: 32px;
-        padding: 10px;
-        text-align: right;
-        text-transform: uppercase;
-        vertical-align: middle;
-    }
-
-    & input, textarea {
-        background-color: #fff;
-        border: none;
-        border-radius: 10px;
-        display: table-cell;
-        font-family: Avenir, Helvetica, Arial, sans-serif;
-        font-size: 1.2em;
-        margin: 10px;
-        padding: 10px;
-        width: 100%;
-    }    
-}
-
-.object-button {
-
-    &__message {
-        font-size: 1.4rem;
-        font-weight: 600;
-        margin: 0 auto;
-
-        &--valid {
-        background-color: #9fffcf;
-        border-radius: 10px;
-        padding: 10px;
-        width: 40%;
-        }
-    }
-
-    a {
-        background-color: #fcfcfc;
-        border: 3px solid #eee;
-        border-radius: 15px;
-        color: #312c50;
-        cursor: pointer;
-        display: block;
-        font-weight: bold;
-        margin: 0 auto;
-        padding: 10px;
-        text-decoration: none;
-        transition: all 200ms ease-out;
-        width: 40%;
-    }
-
-    & button {
-        background-color: #e52901;
-        border: none;
-        border-radius: 10px;
-        color: #fff;
-        cursor: pointer;
-        font-size: 1.2em;
-        font-weight: 600;
-        margin: 20px;
-        padding: 20px;
-        transition: all 100ms;
-
-        &:hover, &:focus {
-            background-color: #ad1f01;
-        }
-    }
-}
-
-.note-about {
-    font-style: italic;
-
-    @media screen and (min-width: 640px) {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    &__user {
-        font-weight: 600;
-        padding: 0 50px;
-        text-align: left;
-    }
-
-    &__date {
-        padding: 0 50px;
-        text-align: right;
-    }
-}
-</style>
--->
