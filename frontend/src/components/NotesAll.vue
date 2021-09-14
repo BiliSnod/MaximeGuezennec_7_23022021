@@ -48,12 +48,12 @@
 -->
 
 <template>
-    <section>
+    <div v-if="currentUser">
         <div class="side-title">
             <a href="/"><img src="../assets/icon/icon-left-font-monochrome-black.png" alt="Vue logo"/></a>
         </div>
         <h1 class="main-title">Dernières notes envoyées</h1>
-        <div class="note-list">
+        <section class="note-list">
             <article v-for="(note) in notes" :key="note" class="single-note">
                 <h2 class="single-note__title"><router-link :to="'/notes/' + note.id">{{ note.title }}</router-link></h2>
                 <div class="note-about">
@@ -66,8 +66,8 @@
                 </div>
                 <p class="single-note__view"><router-link :to="'/notes/' + note.id">Voir la note</router-link></p>
             </article>
-        </div>
-    </section>
+        </section>
+    </div>
 </template>
 
 
@@ -92,6 +92,11 @@ export default {
             pageSize: 5
         };
     },*/
+    computed: {
+        currentUser() {  // stating if the user is logged in
+            return this.$store.state.auth.user;
+        }
+    },
     methods: {
         /*
         getRequestParams(page, pageSize) {
@@ -154,7 +159,7 @@ export default {
          */
    },
    mounted() {
-        this.retrieveNotes();
+        this.retrieveNotes();  // executing the function on page load
         //this.retrievePages();
         // this.retrieveUsers();
         // this.displayAuthor();

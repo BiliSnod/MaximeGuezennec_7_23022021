@@ -1,4 +1,5 @@
-import { createRouter, createWebHistory } from "vue-router"
+import { createRouter, createWebHistory } from "vue-router"  // importing "vue-router" package
+
 import Welcome from "../views/Welcome.vue"
 // import PanelAdmin from "../components/PanelAdmin.vue";
 import UserSignup from "../components/UserSignup.vue";
@@ -58,10 +59,20 @@ const routes = [
 /* --- Defining routes for each linked page [x] --- */
 
 
-const router = createRouter({  // switching from hash mode to history mode inside browser with HTML5 "History API"
-history: createWebHistory(),  // (process.env.BASE_URL),
-routes
-})
+const router = createRouter({ history: createWebHistory(), routes });  // switching from hash mode to history mode inside browser with HTML5 "History API"
+router.beforeEach((to, from, next) => {
+    
+    const noAuthPages = ["/", "/signup", "/login"];  // excluding free access pages
+    const authPages = !noAuthPages.includes(to.path);  // defining pages requiring authentication
+    const loggedIn = localStorage.getItem('user');  // defined as logged in if a "user" object is in localStorage
+ 
+    if (authPages && !loggedIn) {
+        next('/login');  // redirect to login page
+    } else {
+        next();
+    }
+
+});
 
 
 export default router;

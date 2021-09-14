@@ -1,4 +1,4 @@
-module.exports = {  // conncting to the MySQL database, with limitations
+module.exports = {  // connecting to the MySQL database, with limitations
     host: process.env.DB_HOST,
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,

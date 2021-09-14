@@ -8,6 +8,19 @@ export const auth = {
     namespaced: true,  // limiting the methods to this module
     state: initialState,
     actions: {
+        signup({ commit }, user) {
+            return AuthService.signup(user)
+            .then(response => {
+                
+                commit("signupSuccess");
+                return Promise.resolve(response.data);
+
+            },
+            error => {
+                commit("signupFailure");
+                return Promise.reject(error);
+            });
+        },
         login({ commit }, user) {
             return AuthService.login(user)
             .then(user => {
@@ -24,22 +37,15 @@ export const auth = {
         logout({ commit }) {
             AuthService.logout();
             commit("logout");
-        },
-        signup({ commit }, user) {
-            return AuthService.signup(user)
-            .then(response => {
-                
-                commit("signupSuccess");
-                return Promise.resolve(response.data);
-
-            },
-            error => {
-                commit("signupFailure");
-                return Promise.reject(error);
-            });
         }
     },
     mutations: {
+        signupSuccess(state) {
+            state.status.loggedIn = false;
+        },
+        signupFailure(state) {
+            state.status.loggedIn = false;
+        },
         loginSuccess(state, user) {
             state.status.loggedIn = true;
             state.user = user;
@@ -51,12 +57,6 @@ export const auth = {
         logout(state) {
             state.status.loggedIn = false;
             state.user = null;
-        },
-        signupSuccess(state) {
-            state.status.loggedIn = false;
-        },
-        signupFailure(state) {
-            state.status.loggedIn = false;
         }
     }
 };

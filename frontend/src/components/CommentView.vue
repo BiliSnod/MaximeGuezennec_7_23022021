@@ -1,9 +1,10 @@
 <template>
-    <div>
+    <div v-if="currentUser">
         <div class="side-title">
             <a href="/"><img src="../assets/icon/icon-left-font-monochrome-black.png" alt="Vue logo"/></a>
         </div>
-        <div v-if="actualComment">
+        <!-- Displaying this comment -->
+        <section v-if="actualComment">
             <h1 class="main-title">Commentaire n°{{ actualComment.id }}</h1>
             <div class="single-comment">
                 <p>(réponse à <router-link :to="'/notes/' + actualComment.noteId">la note n°{{ actualComment.noteId }}</router-link>)</p>
@@ -13,10 +14,11 @@
                 </div>
                 <p class="single-comment__message">{{ actualComment.message }}</p>
             </div>
+            <!-- Displaying the button to delete this comment for admin -->
             <div v-if="currentAdmin" class="comment-actions">
                 <button @click="deleteComment" class="comment-actions__button comment-actions__button--delete">Supprimer le commentaire</button>
             </div>
-        </div>
+        </section>
     </div>
 </template>
 
@@ -43,7 +45,7 @@ export default {
         }
     },
     methods: {
-        getComment(id) {
+        getComment(id) {  // getting the comment with the ID in parameter
             DataComment.get(id)
             .then(response => {
 
@@ -69,8 +71,8 @@ export default {
         }
     },
     mounted() {
-        this.message = "";
-        this.getComment(this.$route.params.id);
+        this.message = "";  // message is empty on page load
+        this.getComment(this.$route.params.id);  // searching the parameter ID on page load
     }
 };
 </script>

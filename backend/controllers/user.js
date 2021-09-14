@@ -108,7 +108,7 @@ exports.deleteUser = (req, res) => {
     User.destroy({ where: { id: id } })  // using "destroy" method to delete identified user
     .then(num => {
 
-        if (num == 1) {
+        if (num == 1) {  // promise have to return "1" to delete account
         res.send({ message: "Le compte a été supprimé." });
         } else {
         res.status(400).send({ message: "La compte n'a pas pu être supprimé." });
@@ -149,10 +149,10 @@ exports.findOneUser = (req, res) => {
 /* --- Controller to get all existing User accounts [o] --- */
 exports.findAllUsers = (req, res) => {
 
-    const email = req.query.email;
-    let condition = email ? { email: { [Op.like]: `%${email}%` } } : null;
+    const email = req.query.email;  // getting email from query
+    let condition = email ? { email: { [Op.like]: `%${email}%` } } : null;  // condition to know if email exist or not
   
-    User.findAll({ where: condition })
+    User.findAll({ where: condition })  // verifying condition on the whole database table
     .then(data => {
 
         if(!data) {

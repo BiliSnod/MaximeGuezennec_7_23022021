@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="currentUser">
         <div class="side-title">
             <a href="/"><img src="../assets/icon/icon-left-font-monochrome-black.png" alt="Vue logo"/></a>
         </div>
@@ -100,7 +100,7 @@ export default {
             comments: [],
             alertEdit: "",
 
-            comment: {
+            comment: {  // new comment object structure
                 message: "",
                 noteId: "",
                 userId: "",
@@ -123,8 +123,8 @@ export default {
         }
     },
     methods: {
-        getNote(id) {
-            DataComment.getAll(id)
+        getNote(id) {  // getting the note with the ID in parameter
+            DataComment.getAll(id)  // using the route for note with comments display
             .then(response => {
 
                 this.actualNote = response.data;
@@ -152,18 +152,18 @@ export default {
             .then(response => {
 
                 console.log(response.data);
-                this.$router.push({ name: "notes" });  // reload page
+                this.$router.push({ name: "notes" });  // reloading page after deletion
 
             })
             .catch(e => {
                 console.log(e);
             });
         },
-        retrieveComments(id) {
+        retrieveComments(id) {  // displaying comments from the note with comments route
             DataComment.getAll(id)
             .then(response => {
 
-                this.comments = response.data.comments;
+                this.comments = response.data.comments;  // getting the "comments" object from the note
                 console.log("Response", response.data.comments);
 
             })
@@ -172,7 +172,7 @@ export default {
             });
         },
         saveComment() {
-            var data = {
+            var data = {  // filling the comment object properties
                 message: this.comment.message,
                 noteId: this.actualNote.id,
                 userId: this.currentUser.id,
@@ -184,19 +184,19 @@ export default {
 
                 this.comment.id = response.data.id;
                 console.log(response.data);
-                this.submitted = true;
+                this.submitted = true;  // changing status to "submitted"
                 
             })
             .catch(e => {
                 console.log(e);
-                this.alertComment = "Le message est vide !";
+                this.alertComment = "Le message est vide !";  // displaying the alert if form field is empty
             });
-        },    
-        newComment() {
+        } 
+        /*  
+        newComment() {  // UNUSED
             this.submitted = false;
             this.comment = {};
-        }
-        /*
+        },
         deleteComment(id) {
             DataComment.getAll(id)
             .then(response => {
@@ -223,10 +223,10 @@ export default {
         */
     },
     mounted() {
-        this.alertEdit = "";
-        this.getNote(this.$route.params.id);
-        this.retrieveComments(this.$route.params.id);
-        this.alertComment = "";
+        this.alertEdit = "";  // displaying an empty note edition alert on page load
+        this.getNote(this.$route.params.id);  // executing the function on page load
+        this.retrieveComments(this.$route.params.id);  // searching the parameter ID on page load
+        this.alertComment = "";  // displaying an empty comment alert on page load
     }
 };
 </script>

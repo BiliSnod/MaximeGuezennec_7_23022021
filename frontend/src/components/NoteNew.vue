@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="currentUser">
         <div class="side-title">
             <a href="/"><img src="../assets/icon/icon-left-font-monochrome-black.png" alt="Vue logo"/></a>
         </div>
@@ -70,11 +70,11 @@ export default {
     methods: {
         setMedia(event) {
             // this.mediaUrl = this.$refs.media.medias[0];
-            this.note.mediaUrl = event.target.files[0];
+            this.note.mediaUrl = event.target.files[0];  // getting the media file name to fill "mediaUrl"
             // console.log("ETF", event.target.media[0])
         },
         saveNote() {            
-            const formData = new FormData(); // creating a FormData
+            const formData = new FormData(); // creating a FormData, and appending all needed properties
             formData.append("title", this.note.title)
             formData.append("content", this.note.content);
             formData.append("media", this.note.mediaUrl);
@@ -126,7 +126,7 @@ export default {
             });
         },
         */  
-        newNote() {
+        newNote() {  // reinitializing form to send another note
             this.submitted = false;
             this.note = {};
         }

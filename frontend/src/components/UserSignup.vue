@@ -26,13 +26,14 @@
                         <ErrorMessage name="password" />
                     </div>
                 </div>
-
                 <div class="main-button" v-if="!successful">
-                    <button :disabled="loading"><span v-show="loading"></span><span>S'inscrire</span></button>
-                </div>
-                
-                <div v-if="message" class="alert" :class="successful ? 'alert-success' : 'alert-danger'">
-                    <p class="bold">{{ message }}</p>
+                <!-- <button :disabled="loading"><span v-show="loading"></span><span>S'inscrire</span></button> -->
+                    <button>S'inscrire</button>
+                </div>                
+                <!-- Displaying a message if the form is not filled well -->
+                <!-- <div v-if="message" class="alert" :class="successful ? 'alert-success' : 'alert-danger'"> -->
+                <div v-if="message">
+                    {{ message }}
                 </div>
             </Form>
         </div>
@@ -41,18 +42,18 @@
 
 
 <script>
-import { Form, Field, ErrorMessage } from "vee-validate";
-import * as yup from "yup";
+import { Form, Field, ErrorMessage } from "vee-validate";  // using "vee-validate" package to check form data
+import * as yup from "yup";  // importing "yup" data validation library
 
 export default {
-    name: "Signup",
+    name: "signup",
     components: {
         Form,
         Field,
         ErrorMessage,
     },
     data() {
-        const schema = yup.object().shape({
+        const schema = yup.object().shape({  // defining object schema
             firstname: yup.string().required("Veuillez entrer un prénom !").min(3, "Minimum 3 caractères").max(20, "Maximum 20 caractères."),
             lastname: yup.string().required("Veuillez entrer un nom !").min(3, "Minimum 3 caractères.").max(20, "Maximum 20 caractères"),
             email: yup.string().required("Veuillez entrer une adresse e-mail !").email("Cette adresse e-mail n'est pas valide !").max(80, "Maximum 80 caractères."),
@@ -61,13 +62,13 @@ export default {
 
         return {
             successful: false,
-            loading: false,
+            // loading: false,
             message: "",
             schema
         };
     },
     computed: {
-        loggedIn() {
+        loggedIn() {  // checking if user is logged in from global store
             return this.$store.state.auth.status.loggedIn;
         },
     },
@@ -75,21 +76,21 @@ export default {
         handleSignup(user) {
             this.message = "";
             this.successful = false;
-            this.loading = true;
+            // this.loading = true;
 
             this.$store.dispatch("auth/signup", user)
             .then((data) => {
 
                 this.message = data.message;
                 this.successful = true;
-                this.loading = false;
+                // this.loading = false;
 
             },
             (error) => {
 
                 this.message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
                 this.successful = false;
-                this.loading = false;
+                // this.loading = false;
 
             });
         }

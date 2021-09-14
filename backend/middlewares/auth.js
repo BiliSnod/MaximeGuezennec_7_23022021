@@ -22,25 +22,26 @@ module.exports = (req, res, next) => {  // middleware to export before the contr
 
 
 const jwt = require("jsonwebtoken");  // importing "jsonwebtoken" package
-const config = require("../config/auth");
+const config = require("../config/auth");  // importing JWT secret
 
 
 verifyToken = (req, res, next) => {
 
-    let token = req.headers["x-access-token"];
+    // let token = req.headers["x-access-token"];  // searching token in headers
+    let token = req.get("X-Access-Token");  // searching token in headers
 
     if (!token) {
         return res.status(403).send({ message: "Pas de token envoyé." });
     }
 
-    jwt.verify(token, config.secret, (err, decoded) => {
+    jwt.verify(token, config.secret, (err, decoded) => {  // using JWT verify method to decode token with secret
         
         if (err) {
             return res.status(401).send({ message: "Accès refusé." });
         }
         
-        req.userId = decoded.id;
-        next();
+        req.userId = decoded.id;  //  setting ID from request to be same as ID in token
+        next();  // passing to next middleware
 
     });
 };

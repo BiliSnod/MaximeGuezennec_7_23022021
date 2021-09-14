@@ -172,7 +172,7 @@ exports.deleteNote = (req, res) => {
 
     })
     .catch(err => {
-        res.status(500).send({ message: "Impossible de récupérer la note." });
+        res.status(500).send({ message: "Impossible de trouver la note." });
     });
 
 };
@@ -253,7 +253,7 @@ exports.findOneComment = (req, res) => {
     const noteId = req.params.noteId;  // getting ID of the note from the query parameter
     const commentId = req.params.commentId;  // getting ID of the comment from the query parameter
 
-    if ( Note.findByPk(noteId, { include: ["comments"]}) ) {  // TODO checking if the note exists  
+    if (Note.findByPk(noteId, { include: ["comments"]})) {  // checking if the note exists and contain "comments" object
         Comment.findByPk(commentId)  // using "findByPk" method to display data of the identified note (by its database primary key)
         .then(data => {
 
