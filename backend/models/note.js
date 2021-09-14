@@ -2,19 +2,22 @@ module.exports = (sequelize, DataTypes) => {
 
     const Note = sequelize.define("note", {  // defining the model to create each note
         title: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull: false
         },
         content: {
-            type: DataTypes.STRING(2040)
+            type: DataTypes.STRING(2040),
+            allowNull: false
         },
         mediaUrl: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull: false
         }/*,
         mediaType: {
             type: DataTypes.STRING
         }*/
     });
-
+    
     return Note;
 
 };

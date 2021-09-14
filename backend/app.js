@@ -1,6 +1,9 @@
 const express = require("express");  // importing Express
 const path = require("path");  // getting access to file system's path
 
+const globalRateLimiter = require("./middlewares/rateLimiter");  // importing "express-rate-limit" middleware
+const helmet = require("helmet");
+
 const authRoutes = require("./routes/user");  // importing user routes
 const noteRoutes = require("./routes/note");  // importing note routes
 
@@ -17,10 +20,13 @@ app.use((req, res, next) => {  // handling CORS errors and Headers
 app.use(express.urlencoded({ extended: true }));  // middleware to parse the URL-encoded data with "qs" library
 app.use(express.json());  // middleware to transform request's body to JSON
 
+app.use(globalRateLimiter);  // middleware to limit number of requests
+app.use(helmet());  // a set of default middlewares from Helmet
+
 
 const database = require("./models/database");
 
-database.sequelize.sync();  // delete if reinitializing database (next function)
+database.sequelize.sync();  // synchronizing the database on requests [deactivate if reinitializing database (next function)}
 
 /* --- Reinitialize database for testing [o] --- /
 database.sequelize.sync({ force: true }).then(() => {
@@ -28,9 +34,9 @@ database.sequelize.sync({ force: true }).then(() => {
     initial();
 });
 
-const Role = database.roles;
+const Role = database.roles;  
 
-function initial() {
+function initial() {  // creating the two roles used
     Role.create({
         id: 1,
         level: "user"
