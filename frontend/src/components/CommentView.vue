@@ -7,7 +7,7 @@
         <section v-if="actualComment">
             <h1 class="main-title">Commentaire n°{{ actualComment.id }}</h1>
             <div class="single-comment">
-                <p>(réponse à <router-link :to="'/notes/' + actualComment.noteId">la note n°{{ actualComment.noteId }}</router-link>)</p>
+                <p class="single-comment__reference">(réponse à <router-link :to="'/notes/' + actualComment.noteId">la note n°{{ actualComment.noteId }}</router-link>)</p>
                 <div class="object-about">
                     <p class="object-about__user">Par {{ actualComment.firstname }} {{ actualComment.lastname }}.</p>
                     <p class="object-about__date">Le {{ actualComment.createdAt.split("T")[0] }}.</p>
@@ -88,6 +88,19 @@ export default {
 
     @media screen and (min-width: 1280px) {
         width: 75%;
+    }
+
+    &__reference {
+
+        a {
+            color: #312c50;
+            font-weight: 600;
+            text-decoration: none;
+
+            &:hover, &:focus {
+                color: #ad1f01;
+            }
+        }
     }
 
     &__message {

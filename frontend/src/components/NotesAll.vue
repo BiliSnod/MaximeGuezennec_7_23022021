@@ -12,7 +12,7 @@
                     <p class="object-about__date">Le {{ note.createdAt.split("T")[0] }}.</p>
                 </div>
                 <div class="single-note__content">
-                    <router-link :to="'/notes/' + note.id"><img class="single-note__image" :src="note.mediaUrl" :alt="'Image de la note ' + note.id + ' par ' + note.firstname" /></router-link>
+                    <img class="single-note__image" :src="note.mediaUrl" :alt="'Image de la note ' + note.id + ' par ' + note.firstname" />
                     <p>{{ note.content }}</p>
                 </div>
                 <p class="single-note__view"><router-link :to="'/notes/' + note.id">Voir la note</router-link></p>

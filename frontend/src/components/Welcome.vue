@@ -3,7 +3,7 @@
     <div class="welcome">
         <h1 class="welcome__title">{{ msg }}</h1>
         <p v-if="!currentUser">Rejoignez le <strong>réseau social</strong> interne de <em>Groupomania</em> pour échanger entre collègues.</p>
-        <p v-if="currentUser">Bonjour <strong>{{currentUser.firstname}}</strong> merci d'avoir rejoint <em>Groupomania</em> vous pouvez désormais partager avec vos collègues.</p>
+        <p v-if="currentUser">Bonjour <strong>{{currentUser.firstname}}</strong>, merci d'avoir rejoint <em>Groupomania</em>, vous pouvez désormais partager avec vos collègues.</p>
         <p v-if="!currentUser"><a href="/signup">Inscrivez-vous</a> dès maintenant pour rejoindre la discussion !</p>
         <p v-if="currentUser"><a href="/notes">Consultez</a> les dernières notes envoyées dès maintenant, ou <a href="/new">publiez-en une</a> !</p>
     </div>
