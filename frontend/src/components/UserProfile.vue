@@ -10,7 +10,7 @@
             <!-- Disabling user ID display  // <p v-if="currentAdmin"><strong>ID :</strong> <i>{{currentUser.id}}</i></p> -->
             <p><strong>E-mail :</strong> <i>{{currentUser.email}}</i></p>
             <div v-if="currentAdmin">
-                <p v-for="role in currentUser.roles" :key="role"><strong>Accès :</strong> <i>{{role}}</i></p>
+                <p v-for="role in currentUser.roles" :key="role"><strong>Accès :</strong> <i>{{role.split("_")[1]}}</i></p>
             </div>
         </section>
         <!-- Displaying button to delete this user account -->

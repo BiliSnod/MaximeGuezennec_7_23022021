@@ -3,6 +3,7 @@ const router = express.Router();  // using "Router" function of Express to creat
 
 const noteCtrl = require("../controllers/note");  // calling the controllers for notes
 
+const levelCheck = require("../middlewares/level");  // calling the admin middleware only to allow administrator
 const verifyToken = require("../middlewares/auth");  // calling the authentication middleware to allow access by logging in
 const multer = require("../middlewares/multer");  // calling the "multer" middleware for file upload
 
@@ -10,9 +11,9 @@ const multer = require("../middlewares/multer");  // calling the "multer" middle
 /* --- Routes for each functionality [o] --- */
 router.post("/", verifyToken, multer, noteCtrl.createNote);
 router.post("/:noteId/comments", verifyToken, noteCtrl.createComment);
-router.put("/:noteId", verifyToken, noteCtrl.updateNote);
-router.delete("/:noteId", verifyToken, noteCtrl.deleteNote);
-router.delete("/comments/:commentId", verifyToken, noteCtrl.deleteComment);
+router.put("/:noteId", verifyToken, levelCheck, noteCtrl.updateNote);
+router.delete("/:noteId", verifyToken, levelCheck, noteCtrl.deleteNote);
+router.delete("/comments/:commentId", verifyToken, levelCheck, noteCtrl.deleteComment);
 router.get("/:noteId", verifyToken, noteCtrl.findOneNote);
 router.get("/:noteId/comments", verifyToken, noteCtrl.findOneNoteWithComments);
 router.get("/comments/:commentId", verifyToken, noteCtrl.findOneComment);

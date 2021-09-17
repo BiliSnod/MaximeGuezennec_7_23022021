@@ -159,7 +159,7 @@ export default {
             .then(response => {
 
                 this.comments = response.data.comments;  // getting the "comments" object from the note
-                console.log("Response", response.data.comments);
+                console.log(response.data.comments);
 
             })
             .catch(e => {
