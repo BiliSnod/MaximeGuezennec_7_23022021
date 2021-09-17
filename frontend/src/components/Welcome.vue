@@ -13,7 +13,7 @@
 <script>
 export default {
     name: "welcome",
-    props: {  // definining the type of data for "msg"
+    props: {  // defining the type of data for "msg"
         msg: String
     },    
     computed: {

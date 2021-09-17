@@ -6,11 +6,7 @@ class DataComment {
     create(id, data) {
         return http.post(`/notes/${id}/comments`, data);
     }
-    /* DISCARDED
-    update(id, data) {
-        return http.put(`/notes/comments/${id}`, data);
-    }
-    */
+    
     delete(id) {
         return http.delete(`/notes/comments/${id}`);
     }

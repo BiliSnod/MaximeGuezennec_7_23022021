@@ -96,32 +96,42 @@ exports.deleteNote = (req, res) => {
 
     const id = req.params.noteId;  // getting ID of the note from the query parameter
 
-    Note.findByPk(id)  // using "findByPk" method to find data of the identified note
+    Note.findByPk(id, { include: ["comments"] })  // using "findByPk" method to find data of the identified note with its comments
     .then(note => {
         
         const filename = note.mediaUrl.split("/medias/")[1];  // using "split" method to get the media filename from the complete URL
-
+        
         fs.unlink(`medias/${filename}`, () => {  // using "unlink" method from "fs" to delete the file
-            Note.destroy({ where: { id: id } })  // using "destroy" method to delete identified note
-            .then(num => {
 
-                if (num == 1) {  // promise have to return "1"
-                res.status(200).send({ message: "La note a été supprimée." });
-                } else {
-                res.status(400).send({ message: "La note n'a pas pu être supprimée." });
-                }
+            Comment.destroy({where: { [Op.or]: [{noteId: id}] }})  // deleting every comments which are linked with this note by searching its ID
+            .then(() => {
+
+                Note.destroy({ where: { id: id } })  // using "destroy" method to delete identified note
+                .then(num => {
+
+                    if (num == 1) {  // promise have to return "1"
+                    res.status(200).send({ message: "La note a été supprimée." });
+                    } else {
+                    res.status(400).send({ message: "La note n'a pas pu être supprimée." });
+                    }
+
+                })
+                .catch(err => {
+                    res.status(500).send({ message: "La note n'a pas pu être supprimée." });
+                });
 
             })
             .catch(err => {
-                res.status(500).send({ message: "La note n'a pas pu être supprimée." });
+                res.status(500).send({ message: "Impossible de trouver les commentaires." });
             });
+            
         });
 
     })
     .catch(err => {
         res.status(500).send({ message: "Impossible de trouver la note." });
     });
-
+    
 };
 /* --- Controller to delete an existing Note [x] --- */
 

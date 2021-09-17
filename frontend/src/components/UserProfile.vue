@@ -7,14 +7,14 @@
         <!-- Displaying user info, according to role -->
         <section class="default-block">
             <p v-if="currentAdmin"><strong>Token :</strong> <i>{{currentUser.accessToken.substring(0, 20)}} ... {{currentUser.accessToken.substr(currentUser.accessToken.length - 20)}}</i></p>
-            <p v-if="currentAdmin"><strong>ID :</strong> <i>{{currentUser.id}}</i></p>
+            <!-- Disabling user ID display  // <p v-if="currentAdmin"><strong>ID :</strong> <i>{{currentUser.id}}</i></p> -->
             <p><strong>E-mail :</strong> <i>{{currentUser.email}}</i></p>
             <div v-if="currentAdmin">
                 <p v-for="role in currentUser.roles" :key="role"><strong>Accès :</strong> <i>{{role}}</i></p>
             </div>
         </section>
         <!-- Displaying button to delete this user account -->
-        <section v-if="currentUser">
+        <section v-if="!currentAdmin">
             <div class="main-button">
                 <button @click="deleteUser">Supprimer ce compte</button>
             </div>

@@ -40,7 +40,7 @@ exports.signup = (req, res) => {
         
     })
     .catch(err => {
-        res.status(500).send({ message: err.message });
+        res.status(500).send({ message: "L'utilisateur n'a pas pu être enregistré !" });
     });
 
 };
@@ -93,7 +93,7 @@ exports.login = (req, res) => {
 
     })
     .catch(err => {
-        res.status(500).send({ message: err.message });
+        res.status(500).send({ message: "Problème de connection." });
     });
 
 };
