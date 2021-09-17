@@ -3,7 +3,7 @@ const database = require("../models/database");  // importing database model
 const User = database.users;  // importing model for users
 
 
-verifyEmail = (req, res, next) => {
+const emailDuplicate = (req, res, next) => {
 
     User.findOne({ where: { email: req.body.email } })  // searching if a user with the request email address exists
     .then(user => {
@@ -20,4 +20,4 @@ verifyEmail = (req, res, next) => {
 };
 
 
-module.exports = verifyEmail;
+module.exports = emailDuplicate;

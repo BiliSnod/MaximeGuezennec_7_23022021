@@ -2,7 +2,7 @@ const database = require("../models/database");  // importing "database" model
 const User = database.users;  // defining "User" to be the "users" table in database
 
 
-levelCheck = (req, res, next) => {
+const levelCheck = (req, res, next) => {
 
     User.findByPk(req.userId)  // finding users based on their database primary key
     .then(user => {

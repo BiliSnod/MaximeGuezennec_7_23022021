@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");  // importing "jsonwebtoken" package
 const config = require("../config/auth");  // importing JWT secret
 
 
-verifyToken = (req, res, next) => {
+const verifyToken = (req, res, next) => {
 
     let token = req.get("X-Access-Token");  // searching token in headers
 

@@ -44,7 +44,7 @@ export default {
                 // const { notes } = response.data;  // when pagination active
                 const notes = response.data;
                 this.notes = notes.reverse();  // taking "notes" array in the object response, and reversing it
-                console.log("Notes data", response.data);
+                console.log(response.data);
             })
             .catch(e => {
                 console.log(e);
