@@ -1,10 +1,16 @@
-# Clone the repository from https://github.com/BiliSnod/MaximeGuezennec_7_23022021/
+# OPENCLASSROOMS web developer Project 7
 ```
+By Maxime Guezennec
+```
+
+## Clone the repository
+```
+from https://github.com/BiliSnod/MaximeGuezennec_7_23022021/
 ```
 
 ## Database
 ```
-import .sql file from database/ folder
+import on of the .sql file from database/ folder in MySQL
 ```
 create .env file in backend/ folder :
 
@@ -17,7 +23,7 @@ JWT_SECRET=your_secret_key
 ```
 ```
 
-## Backend
+## Back-end
 ```
 npm install
 ```
@@ -30,7 +36,7 @@ API is on http://localhost:3000
 ```
 ```
 
-### Frontend
+### Front-end
 ```
 npm install
 ```
@@ -40,6 +46,6 @@ open new terminal and type :
 ```
 go to http://localhost:8080
 ```
-connect as admin with "address@ema.il" and "OPENCLASSROOMS"
+connect as admin with "address@ema.il" and "OPenClAssr00MS!"
 ```
 ```
