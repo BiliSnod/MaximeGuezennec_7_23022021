@@ -1,8 +1,11 @@
 const config = require("../config/auth");  // getting the JWT secret
 const database = require("../models/database");  // importing database model
+const fs = require("fs");  // importing "fs" package that enable modifications on file system
 
 const User = database.users;  // importing model for users
 const Role = database.roles;  // importing model for roles
+const Note = database.notes;  // importing model for roles
+const Comment = database.comments;  // importing model for roles
 
 const Op = database.Sequelize.Op;  // calling Sequelize operators
 
@@ -104,21 +107,55 @@ exports.login = (req, res) => {
 exports.deleteUser = (req, res) => {
 
     const id = req.params.userId;  // getting ID of the user from the query parameter
+    
+    Comment.destroy({where: { [Op.or]: [{ userId: id }] } })  // deleting every comments which are linked with this user by searching its ID
+    .then(() => {
 
-    User.destroy({ where: { id: id } })  // using "destroy" method to delete identified user
-    .then(num => {
+        Note.findAll({ where: { userId: id } })  // searching all notes linked to this user
+        .then(notes => {
 
-        if (num == 1) {  // promise have to return "1" to delete account
-        res.send({ message: "Le compte a été supprimé." });
-        } else {
-        res.status(400).send({ message: "La compte n'a pas pu être supprimé." });
-        }
+            notes.forEach((note) => {  // what to do for each found note
+                
+                const filename = note.mediaUrl.split("/medias/")[1];  // using "split" method to get the media filename from the complete URL
 
+                fs.unlink(`medias/${filename}`, () => {  // using "unlink" method from "fs" to delete the file
+
+                    Note.destroy({ where: { [Op.or]: [{ userId: id }] } })  // using "destroy" method to delete identified notes linked to this user by ID
+                    .then(() => {
+
+                        User.destroy({ where: { id: id } })  // using "destroy" method to delete identified user
+                        .then(num => {
+
+                            if (num == 1) {  // promise have to return "1" to delete account
+                            res.send({ message: "Le compte a été supprimé." });
+                            } else {
+                            res.status(400).send({ message: "La compte n'a pas pu être supprimé." });
+                            }
+
+                        })
+                        .catch(err => {
+                            res.status(500).send({ message: "La compte n'a pas pu être supprimé." });
+                        });
+
+                    })
+                    .catch(err => {
+                        res.status(500).send({ message: "La note n'a pas pu être supprimée." });
+                    });
+
+                });
+                
+            });
+
+        })
+        .catch(err => {
+            res.status(500).send({ message: "Impossible de trouver les notes." });
+        });
+        
     })
     .catch(err => {
-        res.status(500).send({ message: "La compte n'a pas pu être supprimé." });
+        res.status(500).send({ message: "Impossible de supprimer les commentaires." });
     });
-
+    
 };
 /* --- Controller to delete User account [x] --- */
 

@@ -103,7 +103,7 @@ exports.deleteNote = (req, res) => {
         
         fs.unlink(`medias/${filename}`, () => {  // using "unlink" method from "fs" to delete the file
 
-            Comment.destroy({where: { [Op.or]: [{noteId: id}] }})  // deleting every comments which are linked with this note by searching its ID
+            Comment.destroy({where: { [Op.or]: [{ noteId: id }] }})  // deleting every comments which are linked with this note by searching its ID
             .then(() => {
 
                 Note.destroy({ where: { id: id } })  // using "destroy" method to delete identified note
@@ -238,7 +238,7 @@ exports.findOneComment = (req, res) => {
 exports.findAllNotes = (req, res) => {
 
     const title = req.query.title;  // defining query's title
-    var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;  // finding notes by their title
+    let condition = title ? { title: { [Op.like]: `%${title}%` } } : null;  // finding notes by their title
   
     Note.findAll({ where: condition })
     .then(data => {
