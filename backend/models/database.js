@@ -24,13 +24,13 @@ database.notes = require("./note.js")(sequelize, Sequelize);
 database.roles = require("./role.js")(sequelize, Sequelize);
 database.users = require("./user.js")(sequelize, Sequelize);
 
-database.users.hasMany(database.notes, { as: "notes", onDelete: "cascade"/*, foreignKey: { allowNull: false } , hooks: true*/ });  // using "hasMany" method to allow notes to be linked to comments
-database.users.hasMany(database.comments, { as: "comments", onDelete: "cascade"/*, foreignKey: { allowNull: false } , hooks: true*/ });  // using "hasMany" method to allow notes to be linked to comments
+database.users.hasMany(database.notes, { as: "notes", onDelete: "cascade" });  // using "hasMany" method to allow users to have notes linked to them and deleted in cascade
+database.users.hasMany(database.comments, { as: "comments", onDelete: "cascade" });  // using "hasMany" method to allow users to have comments linked to them and deleted in cascade
 database.notes.belongsTo(database.users, { foreignKey: "userId" });  // using "belongsTo" method to link a note with a user to get its ID
 database.notes.belongsTo(database.users, { targetKey: "firstname", foreignKey: "firstname" });  // using "belongsTo" method to link a note with a user to get its ID
 database.notes.belongsTo(database.users, { targetKey: "lastname", foreignKey: "lastname" });  // using "belongsTo" method to link a note with a user to get its ID
 
-database.notes.hasMany(database.comments, { as: "comments", onDelete: "cascade"/*, foreignKey: { allowNull: false } , hooks: true*/ });  // using "hasMany" method to allow notes to be linked to comments
+database.notes.hasMany(database.comments, { as: "comments", onDelete: "cascade" });  // using "hasMany" method to allow notes to have comments linked to them and deleted in cascade
 database.comments.belongsTo(database.notes, { foreignKey: "noteId" });  // using "belongsTo" method to link a comment with a unique note
 database.comments.belongsTo(database.users, { foreignKey: "userId" });  // using "belongsTo" method to link a comment with a user
 database.comments.belongsTo(database.users, { targetKey: "firstname", foreignKey: "firstname" });  // using "belongsTo" method to link a note with a user to get its ID
